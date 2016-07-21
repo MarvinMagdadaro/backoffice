@@ -1,4 +1,5 @@
+/.settings
+/log
 /target
-/Spring-AngularJS-Java-WebApp-Template-Project.iml
-.idea
-target
+.classpath
+.project
