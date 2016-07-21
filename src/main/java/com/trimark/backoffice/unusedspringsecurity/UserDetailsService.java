@@ -1,7 +1,4 @@
-package yourwebproject2.unusedspringsecurity;
+package com.trimark.backoffice.unusedspringsecurity;
 
-/**
- * @author: kameshr
- */
 public interface UserDetailsService extends org.springframework.security.core.userdetails.UserDetailsService {
 }

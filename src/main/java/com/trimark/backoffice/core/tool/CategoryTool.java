@@ -1,17 +1,15 @@
-package yourwebproject2.core.tool;
+package com.trimark.backoffice.core.tool;
 
-import yourwebproject2.model.entity.Category;
-import yourwebproject2.service.CategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.trimark.backoffice.model.entity.Category;
+import com.trimark.backoffice.service.CategoryService;
+
 import java.util.HashMap;
 
-/**
- * @author: kameshr
- */
 public class CategoryTool {
     private static Logger LOG = LoggerFactory.getLogger(CategoryTool.class);
     public static void main(String[] args) throws Exception {

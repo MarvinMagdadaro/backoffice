@@ -1,23 +1,26 @@
-package yourwebproject2.service.impl;
+package com.trimark.backoffice.service.impl;
 
-import yourwebproject2.framework.data.BaseJPAServiceImpl;
-import yourwebproject2.framework.exception.EmailNotFoundException;
-import yourwebproject2.model.entity.User;
-import yourwebproject2.model.repository.UserRepository;
-import yourwebproject2.service.UserService;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.trimark.backoffice.framework.data.BaseJPAServiceImpl;
+import com.trimark.backoffice.framework.exception.EmailNotFoundException;
+import com.trimark.backoffice.model.entity.User;
+import com.trimark.backoffice.model.repository.UserRepository;
+import com.trimark.backoffice.service.UserService;
+
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.Date;
+import java.util.List;
 
 /**
  * Service impl class to implement services for accessing the User object entity.
  * This class acts as an interface between the outer world and the UserRepository
  *
- * @author: kameshr
  */
 @Service
 @Transactional
@@ -78,5 +81,11 @@ public class UserServiceImpl extends BaseJPAServiceImpl<User, Long> implements U
         } else {
             throw new EmailNotFoundException("User not found for email: "+email);
         }
+    }
+    
+    @Override
+    public List<User> getUsers(int pageNum, int countPerPage, Order order) {
+    	List<User> users = (List<User>) userRepository.findAllByPage(pageNum, countPerPage, order);
+        return users;
     }
 }

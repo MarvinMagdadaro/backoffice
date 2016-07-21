@@ -1,16 +1,19 @@
-package yourwebproject2.service;
+package com.trimark.backoffice.service;
 
-import yourwebproject2.framework.data.BaseService;
-import yourwebproject2.framework.exception.EmailNotFoundException;
-import yourwebproject2.model.entity.User;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.hibernate.criterion.Order;
+
+import com.trimark.backoffice.framework.data.BaseService;
+import com.trimark.backoffice.framework.exception.EmailNotFoundException;
+import com.trimark.backoffice.model.entity.User;
 
 /**
  *
  * Service class to have business logic operation on User entity
  *
- * @author: kameshr
  */
 public interface UserService extends BaseService<User, Long> {
 
@@ -66,4 +69,6 @@ public interface UserService extends BaseService<User, Long> {
      * @return
      */
     public User findByEmail(String email) throws EmailNotFoundException;
+    
+    public List<User> getUsers(int pageNum, int countPerPage, Order order);
 }

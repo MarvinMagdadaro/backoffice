@@ -1,18 +1,16 @@
-package yourwebproject2.model.repository.impl;
+package com.trimark.backoffice.model.repository.impl;
 
-import yourwebproject2.framework.data.BaseHibernateJPARepository;
-import yourwebproject2.model.entity.Category;
-import yourwebproject2.model.repository.CategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.trimark.backoffice.framework.data.BaseHibernateJPARepository;
+import com.trimark.backoffice.model.entity.Category;
+import com.trimark.backoffice.model.repository.CategoryRepository;
+
 import javax.annotation.PostConstruct;
 import java.util.List;
 
-/**
- * Created by Y.Kamesh on 8/2/2015.
- */
 @Repository
 public class CategoryRepositoryImpl extends BaseHibernateJPARepository<Category, Long> implements CategoryRepository {
     private static Logger LOG = LoggerFactory.getLogger(CategoryRepositoryImpl.class);

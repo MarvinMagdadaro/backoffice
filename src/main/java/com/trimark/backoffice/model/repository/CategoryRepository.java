@@ -1,14 +1,13 @@
-package yourwebproject2.model.repository;
-
-import yourwebproject2.framework.data.BaseJPARepository;
-import yourwebproject2.model.entity.Category;
+package com.trimark.backoffice.model.repository;
 
 import java.util.List;
+
+import com.trimark.backoffice.framework.data.BaseJPARepository;
+import com.trimark.backoffice.model.entity.Category;
 
 /**
  * CRUD operations come from Base Repo but additional operations can be defined here.
  *
- * @author: kameshr
  */
 public interface CategoryRepository extends BaseJPARepository<Category, Long> {
     /**

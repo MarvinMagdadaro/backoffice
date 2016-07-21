@@ -1,12 +1,9 @@
-package yourwebproject2.model.entity.helper;
-
-import yourwebproject2.model.entity.Job;
+package com.trimark.backoffice.model.entity.helper;
 
 import java.util.Comparator;
 
-/**
- * Created by Y.Kamesh on 8/8/2015.
- */
+import com.trimark.backoffice.model.entity.Job;
+
 public class CategoryPriorityComparator implements Comparator<Job> {
 
     /**

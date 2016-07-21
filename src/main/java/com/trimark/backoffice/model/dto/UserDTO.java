@@ -1,9 +1,7 @@
-package yourwebproject2.model.dto;
+package com.trimark.backoffice.model.dto;
 
-/**
- * @author: kameshr
- */
 public class UserDTO {
+	private long id;
     String email;
     String password;
     String displayName;
@@ -12,7 +10,16 @@ public class UserDTO {
     String salt;
     int keySize;
     int iterations;
+    RoleDTO role;
 
+	public long getId() {
+		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
+	}
+	
     public String getEmail() {
         return email;
     }
@@ -75,5 +82,13 @@ public class UserDTO {
 
     public void setIterations(int iterations) {
         this.iterations = iterations;
+    }
+
+    public RoleDTO getRole() {
+        return role;
+    }
+
+    public void setRole(RoleDTO role) {
+        this.role = role;
     }
 }

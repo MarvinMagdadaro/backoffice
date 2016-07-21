@@ -1,4 +1,4 @@
-package yourwebproject2.core;
+package com.trimark.backoffice.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Main class to run job execution logic in a demon mode
  *
- * Created by Y.Kamesh on 8/8/2015.
  */
 public class YourWebProjectJobCoreDaemon {
     private static Logger LOG = LoggerFactory.getLogger(YourWebProjectJobCoreDaemon.class);

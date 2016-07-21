@@ -1,4 +1,4 @@
-package yourwebproject2.unusedspringsecurity.token;
+package com.trimark.backoffice.unusedspringsecurity.token;
 
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.userdetails.User;

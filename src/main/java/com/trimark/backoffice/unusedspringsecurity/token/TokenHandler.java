@@ -1,4 +1,4 @@
-package yourwebproject2.unusedspringsecurity.token;
+package com.trimark.backoffice.unusedspringsecurity.token;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -7,9 +7,6 @@ import org.apache.commons.lang.Validate;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.core.userdetails.User;
 
-/**
- * @author: kameshr
- */
 public final class TokenHandler implements InitializingBean {
     private String secret;
     private TokenUserService tokenUserService;

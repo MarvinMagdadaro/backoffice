@@ -1,0 +1,86 @@
+<div ng-include="'webui/views/common/header.html'"></div>
+
+<div class="container" >
+    <div class="generic-container" ng-controller="UserController as ctrl">
+        <div class="panel panel-default">
+            <div class="panel-heading"><span class="lead">User Form </span></div>
+            <div class="formcontainer">
+                <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
+                    <input type="hidden" ng-model="ctrl.user.id" />
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-2 control-lable" for="file">User Name</label>
+                            <div class="col-md-7">
+                                <input type="text" ng-model="ctrl.user.displayName" name="name" class="form-control input-sm" placeholder="Enter User Name" required/>
+                                <div class="has-error" ng-show="myForm.$dirty">
+                                    <span ng-show="myForm.name.$error.required">This is a required field</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      
+                    
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-2 control-lable" for="file">Email</label>
+                            <div class="col-md-7">
+                                <input type="text" ng-model="ctrl.user.email" name="priority" class="form-control input-sm" placeholder="Enter Email" required/>
+                                <div class="has-error" ng-show="myForm.$dirty">
+                                    <span ng-show="myForm.priority.$error.required">This is a required field</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+					<div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-2 control-lable" for="file">Role</label>
+							<div class="col-md-7" ng-controller="RoleController as rctrl">
+							    <select id="RoleSelector" style="width: 100%;">
+							      <option ng-repeat="role in rctrl.roles" value="{{role.id}}">{{role.rolename}}</option>
+							    </select>
+							</div>                    
+                        </div>
+                    </div>
+
+					<div class="row">
+                        <div class="form-actions floatRight">
+                            <input type="submit"  value="{{!ctrl.user.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
+                            <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset Form</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>    
+        <div class="panel panel-default">
+              <!-- Default panel contents -->
+            <div class="panel-heading"><span class="lead">List of Users </span></div>
+            <div class="tablecontainer">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID.</th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th width="20%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="u in ctrl.users">
+                            <td><span ng-bind="u.id"></span></td>
+                            <td><span ng-bind="u.displayName"></span></td>
+                            <td><span ng-bind="u.email"></span></td>
+                            <td><span ng-bind="u.role.rolename"></span></td>
+                            <td>
+                            <button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success btn-sm custom-width">Edit</button>  
+                            <button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-danger btn-sm custom-width">Remove</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>		
+    <div ng-include="'webui/views/common/footer.html'"></div>
+</div>

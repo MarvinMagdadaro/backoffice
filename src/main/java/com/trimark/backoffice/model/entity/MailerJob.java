@@ -1,8 +1,5 @@
-package yourwebproject2.model.entity;
+package com.trimark.backoffice.model.entity;
 
-/**
- * @author: kameshr
- */
 public class MailerJob extends Job {
     enum MailType {
         CONFIRMATION, PASSWORD_RESET

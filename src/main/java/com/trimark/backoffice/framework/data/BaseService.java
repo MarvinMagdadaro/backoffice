@@ -1,4 +1,4 @@
-package yourwebproject2.framework.data;
+package com.trimark.backoffice.framework.data;
 
 import org.hibernate.criterion.Order;
 
@@ -9,7 +9,6 @@ import java.util.Collection;
  * Interface listing the most basic services required to be present in any
  * service built upon an domain entity object that is persisted using repository.
  *
- * @author : Y Kamesh Rao
  */
 public interface BaseService<T extends Entity, ID extends Serializable> {
     /**

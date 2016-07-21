@@ -1,5 +1,6 @@
-package yourwebproject2.unusedspringsecurity.token;
+package com.trimark.backoffice.unusedspringsecurity.token;
 
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
@@ -7,13 +8,11 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @author: kameshr
- */
 @Component
 public class TokenAuthenticationService {
     private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
 
+	private AuthenticationManager authenticationManager;
     private TokenHandler tokenHandler;
 
     public void addAuthentication(HttpServletResponse response, TokenUserAuthentication authentication) {
@@ -39,4 +38,13 @@ public class TokenAuthenticationService {
     public void setTokenHandler(TokenHandler tokenHandler) {
         this.tokenHandler = tokenHandler;
     }
+
+	public AuthenticationManager getAuthenticationManager() {
+		return authenticationManager;
+	}
+
+	public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+		this.authenticationManager = authenticationManager;
+	}
+
 }

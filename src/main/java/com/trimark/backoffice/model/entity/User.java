@@ -1,34 +1,40 @@
-package yourwebproject2.model.entity;
+package com.trimark.backoffice.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import yourwebproject2.framework.data.JPAEntity;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.trimark.backoffice.framework.data.JPAEntity;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
-/**
- * Created by Y.Kamesh on 10/9/2015.
- */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(indexes = {  @Index(name="email_idx", columnList = "email", unique = true),
                     @Index(name="displayName_idx", columnList = "display_name") })
-public class User extends JPAEntity<Long> implements Serializable {
+@Access(AccessType.FIELD)
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+public class User extends JPAEntity<Long> implements UserDetails {
+/*
     public enum Role {
         USER,
         ADMIN
     }
-
+*/
     private String email;
     private @JsonIgnore String password;
     private boolean enabled;
-    private Role role;
     private String displayName;
 
     private @JsonIgnore Integer loginCount;
@@ -38,6 +44,13 @@ public class User extends JPAEntity<Long> implements Serializable {
     private @JsonIgnore String lastLoginIp;
 
     private static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    @OneToOne(fetch = FetchType.EAGER)  
+    @JoinTable(name = "user_roles",  
+        joinColumns        = {@JoinColumn(name = "user_id", referencedColumnName = "id")},  
+        inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}  
+    )
+    private Role role;
 
     @Column @Email @NotNull @NotBlank
     public String getEmail() {
@@ -159,4 +172,45 @@ public class User extends JPAEntity<Long> implements Serializable {
                 ", lastLoginIp='" + lastLoginIp + '\'' +
                 '}';
     }
+
+    @Transient
+    public Set<Permission> getPermissions() {
+        Set<Permission> perms = new HashSet<Permission>();
+        if (role!=null){
+        	perms.addAll(role.getPermissions());
+        }
+        return perms;
+    }
+
+    @Override
+    @Transient
+    public Collection<GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+        authorities.add(getRole());
+        authorities.addAll(getPermissions());
+        return authorities;
+    }
+
+	@Override
+	public String getUsername() {
+		return this.getEmail();
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

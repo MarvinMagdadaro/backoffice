@@ -1,8 +1,3 @@
-/**
- * Created by Y.Kamesh on 4/12/2015.
- * Referred: https://github.com/mpetersen/aes-example
- */
-
 'use strict';
 angular.module('App.Auth')
     .service('AuthService', ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout', 'BackendCfg',
@@ -28,7 +23,7 @@ angular.module('App.Auth')
                     .success(function (response) {
                         callback(response);
                     });
-                console.log('login event posted...')
+                console.log('login event posted...');
             };
 
             service.register = function (user, callback) {
@@ -51,6 +46,16 @@ angular.module('App.Auth')
 
                 $http.post(BackendCfg.url+'/api/user/register', user )
                     .success(function (response) {
+                        callback(response);
+                    });
+            };
+
+            service.logout = function (callback) {
+                BackendCfg.setupHttp($http);
+                console.log('logout!!!');
+
+                $http.get(BackendCfg.url+'/api/user/logout')
+                    .then(function (response) {
                         callback(response);
                     });
             };
@@ -88,7 +93,7 @@ angular.module('App.Auth')
             service.createJWTToken = function (user, token) {
                 $rootScope.globals = {
                     currentUser: user,
-                    token: token
+                    token: token,
                 };
 
                 $http.defaults.headers.common['Authorization'] = 'Bearer ' + token;

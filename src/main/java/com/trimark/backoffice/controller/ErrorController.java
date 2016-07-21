@@ -1,7 +1,5 @@
-package yourwebproject2.controller;
+package com.trimark.backoffice.controller;
 
-import yourwebproject2.framework.api.APIResponse;
-import yourwebproject2.framework.controller.BaseController;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,15 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.trimark.backoffice.framework.api.APIResponse;
+import com.trimark.backoffice.framework.controller.BaseController;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author: kameshr
- */
 @Controller
 public class ErrorController extends BaseController {
     private static Logger LOG = LoggerFactory.getLogger(ErrorController.class);

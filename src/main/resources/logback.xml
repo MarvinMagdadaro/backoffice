@@ -6,13 +6,23 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>log/yourwebproject2.log</file>
+        <file>log/com.trimark.backoffice.log</file>
 
         <layout class="ch.qos.logback.classic.PatternLayout">
           <Pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</Pattern>
         </layout>
-      </appender>
+	</appender>
 
+	<logger name="org.springframework.security" level="ALL" additivity="false">
+	    <appender-ref ref="STDOUT" />
+	    <appender-ref ref="FILE" />
+	</logger>
+	
+	<logger name="org.springframework.web" level="ALL" additivity="false">
+	    <appender-ref ref="STDOUT" />
+	    <appender-ref ref="FILE" />
+	</logger>
+	
     <root level="info">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>

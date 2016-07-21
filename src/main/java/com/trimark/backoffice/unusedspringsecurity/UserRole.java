@@ -1,13 +1,11 @@
-package yourwebproject2.unusedspringsecurity;
-
-import yourwebproject2.model.entity.User;
+package com.trimark.backoffice.unusedspringsecurity;
 
 import javax.persistence.*;
+
+import com.trimark.backoffice.model.entity.User;
+
 import java.io.Serializable;
 
-/**
- * @author: kameshr
- */
 //@Entity
 //@Table(indexes = {  @Index(name="email_fk_idx", columnList = "email", unique = true) })
 public class UserRole implements Serializable {

@@ -1,4 +1,4 @@
-package yourwebproject2;
+package com.trimark.backoffice;
 
 
 import org.json.JSONObject;
@@ -25,11 +25,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-/**
- * Unit Test package for Job Controller
- *
- * Created by Y.Kamesh on 8/4/2015.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={
         "classpath:config/spring/appContext-scheduler.xml",
@@ -79,13 +74,13 @@ public class JobControllerTest {
 
     @Test
     public void testJobSubmitAndStatusCoreFlow() throws Exception {
-        LinkedHashMap<Long, String> jobIds = new LinkedHashMap<>();
-        LinkedHashMap<Long, String> jobIdsByCompletionOrder = new LinkedHashMap<>();
+        final LinkedHashMap<Long, String> jobIds = new LinkedHashMap<>();
+        final LinkedHashMap<Long, String> jobIdsByCompletionOrder = new LinkedHashMap<>();
         for(int c=1, cId=1; c<=100; c++) {
             LOG.info("Scheduling Job: job"+c+" with priority="+(cId));
             this.mockMvc.perform(post("/job/submit").contentType(MediaType.parseMediaType("application/json;charset=UTF-8"))
                     .header("authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5a2FtZXNocmFvQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNDQ2NTA3ODk3fQ.ntqtsfZch9V51peXY-wzguRBECYUNuOul1DfJUiHcVY")
-                    .content("{\"name\":\"job"+c+"\", \"catId\":"+(cId)+", \"metadataJsonString\":\"some_data\", \"callbackUrl\":\"http://some.url\"}")
+                    .content("{\"name\":\"job"+c+"\", \"catId\":"+(cId)+", \"metadataJsonString\":\"some_data\", \"callbackUrl\":\"https://www.youtube.com/\"}")
                     .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType("application/json;charset=UTF-8"))

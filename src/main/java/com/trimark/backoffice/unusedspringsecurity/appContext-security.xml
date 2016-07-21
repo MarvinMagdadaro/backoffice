@@ -43,16 +43,16 @@
         </beans:property>
     </beans:bean>
 
-    <beans:bean id="authenticationEntryPoint" class="yourwebproject2.unusedspringsecurity.RESTAuthenticationEntryPoint" />
+    <beans:bean id="authenticationEntryPoint" class="com.trimark.backoffice.unusedspringsecurity.RESTAuthenticationEntryPoint" />
 
     <beans:bean id="csrfTokenRepository"
                 class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository" >
         <beans:property name="headerName" value="X-XSRF-TOKEN" />
     </beans:bean>
 
-    <beans:bean id="csrfHeaderFilter" class="yourwebproject2.unusedspringsecurity.CSRFHeaderFilter" />
-    <beans:bean id="restAuthFilter" class="yourwebproject2.unusedspringsecurity.RESTAuthFilter" />
-    <beans:bean id="statelessAuthFilter" class="yourwebproject2.unusedspringsecurity.token.StatelessAuthenticationFilter">
+    <beans:bean id="csrfHeaderFilter" class="com.trimark.backoffice.unusedspringsecurity.CSRFHeaderFilter" />
+    <beans:bean id="restAuthFilter" class="com.trimark.backoffice.unusedspringsecurity.RESTAuthFilter" />
+    <beans:bean id="statelessAuthFilter" class="com.trimark.backoffice.unusedspringsecurity.token.StatelessAuthenticationFilter">
         <beans:property name="authenticationService" ref="tokenAuthenticationService" />
     </beans:bean>
 
@@ -62,12 +62,12 @@
         <beans:property name="passwordEncoder" ref="bCryptPasswordEncoder" />
     </beans:bean>
 
-    <beans:bean id="tokenUserService" class="yourwebproject2.unusedspringsecurity.token.TokenUserService" />
-    <beans:bean id="tokenHandler" class="yourwebproject2.unusedspringsecurity.token.TokenHandler">
+    <beans:bean id="tokenUserService" class="com.trimark.backoffice.unusedspringsecurity.token.TokenUserService" />
+    <beans:bean id="tokenHandler" class="com.trimark.backoffice.unusedspringsecurity.token.TokenHandler">
         <beans:property name="secret" value="SECRET" />
         <beans:property name="tokenUserService" ref="tokenUserService" />
     </beans:bean>
-    <beans:bean id="tokenAuthenticationService" class="yourwebproject2.unusedspringsecurity.token.TokenAuthenticationService">
+    <beans:bean id="tokenAuthenticationService" class="com.trimark.backoffice.unusedspringsecurity.token.TokenAuthenticationService">
         <beans:property name="tokenHandler" ref="tokenHandler" />
     </beans:bean>
 

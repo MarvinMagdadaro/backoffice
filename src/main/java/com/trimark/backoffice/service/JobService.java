@@ -1,13 +1,10 @@
-package yourwebproject2.service;
-
-import yourwebproject2.framework.data.BaseService;
-import yourwebproject2.model.entity.Job;
+package com.trimark.backoffice.service;
 
 import java.util.List;
 
-/**
- * Created by Y.Kamesh on 8/2/2015.
- */
+import com.trimark.backoffice.framework.data.BaseService;
+import com.trimark.backoffice.model.entity.Job;
+
 public interface JobService extends BaseService<Job, Long> {
     /**
      *

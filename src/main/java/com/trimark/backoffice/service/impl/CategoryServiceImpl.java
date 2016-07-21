@@ -1,22 +1,20 @@
-package yourwebproject2.service.impl;
+package com.trimark.backoffice.service.impl;
 
-import yourwebproject2.framework.data.BaseJPAServiceImpl;
-import yourwebproject2.framework.exception.NotFoundException;
-import yourwebproject2.model.entity.Category;
-import yourwebproject2.model.repository.CategoryRepository;
-import yourwebproject2.service.CategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.trimark.backoffice.framework.data.BaseJPAServiceImpl;
+import com.trimark.backoffice.framework.exception.NotFoundException;
+import com.trimark.backoffice.model.entity.Category;
+import com.trimark.backoffice.model.repository.CategoryRepository;
+import com.trimark.backoffice.service.CategoryService;
+
 import javax.annotation.PostConstruct;
 import java.util.List;
 
-/**
- * Created by Y.Kamesh on 8/2/2015.
- */
 @Service
 @Transactional
 public class CategoryServiceImpl extends BaseJPAServiceImpl<Category, Long> implements CategoryService {

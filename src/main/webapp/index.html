@@ -2,7 +2,7 @@
 <html ng-app="YWP2Web">
     <link lang="en">
     <meta charset="UTF-8">
-    <title>YourWebProject2</title>
+    <title>Trimark Backoffice</title>
 
     <link rel="stylesheet" href="res/css/app.css" />
     <link rel="stylesheet" href="res/js/bootstrap/dist/css/bootstrap.min.css" />
@@ -26,10 +26,17 @@
     <script src="webui/controllers/HomeController.js"></script>
     <script src="webui/controllers/LoginController.js"></script>
     <script src="webui/controllers/RegisterController.js"></script>
+    <script src="webui/controllers/UserController.js"></script>
+    <script src="webui/controllers/RoleController.js"></script>
+    <script src="webui/controllers/PermissionController.js"></script>
+    <script src="webui/services/AppService.js"></script>
     <script src="webui/services/AuthService.js"></script>
+    <script src="webui/services/UserService.js"></script>
+    <script src="webui/services/RoleService.js"></script>
+    <script src="webui/services/PermissionService.js"></script>
     <script src="webui/YWP2Web.js"></script>
 </head>
-<body>
+<body class="ng-cloak">
     <div ng-view></div>
 </body>
 </html>

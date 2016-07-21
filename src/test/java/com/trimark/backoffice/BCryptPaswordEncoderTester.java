@@ -1,11 +1,8 @@
-package yourwebproject2;
+package com.trimark.backoffice;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 
-/**
- * @author: kameshr
- */
 public class BCryptPaswordEncoderTester {
     private static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 

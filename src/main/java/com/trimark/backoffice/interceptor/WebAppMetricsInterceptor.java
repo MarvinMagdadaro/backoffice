@@ -1,4 +1,4 @@
-package yourwebproject2.interceptor;
+package com.trimark.backoffice.interceptor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * An MVC interceptor to collect metrics like processing time of a controller action handler
  *
- * Created by Y.Kamesh on 8/2/2015.
  */
 public class WebAppMetricsInterceptor extends HandlerInterceptorAdapter {
     private static Logger LOG = LoggerFactory.getLogger(WebAppMetricsInterceptor.class);

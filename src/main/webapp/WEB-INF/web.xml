@@ -4,24 +4,37 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
                             http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-        id="yourwebproject2" version="2.5">
-    <display-name>Your Web Project 2</display-name>
+        id="TrimarkBackoffice" version="2.5">
+    <display-name>Trimark Backoffice</display-name>
 
     <!-- Spring Framework Configuration -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
             classpath:config/spring/appContext-interceptor.xml,
-            classpath:config/spring/appContext-jdbc-test.xml,
+            <!-- classpath:config/spring/appContext-jdbc-test.xml, -->
+            classpath:config/spring/appContext-jdbc.xml,
             classpath:config/spring/appContext-repository.xml,
             classpath:config/spring/appContext-service.xml,
             classpath:config/spring/appContext-scheduler.xml,
             classpath:config/spring/appContext-auth.xml,
-            classpath:config/spring/appContext-servlet.xml
+            classpath:config/spring/appContext-servlet.xml,
+            classpath:config/spring/appContext-security.xml,
         </param-value>
     </context-param>
 
     <!-- Filter Configurations -->
+    <!-- Spring Security filter -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	 
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
     <!-- UTF-8 encoding filter -->
     <filter>
         <filter-name>encodingFilter</filter-name>
@@ -39,6 +52,7 @@
     </filter-mapping>
 
     <!-- JWT Token Auth filter -->
+    <!-- 
     <filter>
         <filter-name>jwtTokenAuthFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -48,13 +62,14 @@
         <filter-name>jwtTokenAuthFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
+ 	-->
+ 	
     <!-- Servlet Configurations -->
     <!-- Spring Servlet for WebApp -->
     <servlet>
         <servlet-name>webAppDispatcherServlet</servlet-name>
         <servlet-class>
-            yourwebproject2.servlet.YourWebAppDispatcherServlet
+            com.trimark.backoffice.servlet.WebAppDispatcherServlet
         </servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>

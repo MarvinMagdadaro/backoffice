@@ -1,8 +1,5 @@
-package yourwebproject2.unusedspringsecurity;
+package com.trimark.backoffice.unusedspringsecurity;
 
-import yourwebproject2.framework.exception.EmailNotFoundException;
-import yourwebproject2.model.entity.User;
-import yourwebproject2.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,11 +8,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.trimark.backoffice.framework.exception.EmailNotFoundException;
+import com.trimark.backoffice.model.entity.User;
+import com.trimark.backoffice.model.repository.UserRepository;
+
 import java.util.*;
 
-/**
- * @author: kameshr
- */
 @Service
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -75,7 +73,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         };
     }
 
-    // Converts yourwebproject2.model.entity..User user to org.springframework.security.core.userdetails.User
+    // Converts com.trimark.backoffice.model.entity..User user to org.springframework.security.core.userdetails.User
     private org.springframework.security.core.userdetails.User buildUserForAuthentication(User user,
                                                                                           List<GrantedAuthority> authorities) {
 

@@ -1,4 +1,4 @@
-package yourwebproject2;
+package com.trimark.backoffice;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,11 +16,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-/**
- * Unit Test package for Category Controller
- *
- * Created by Y.Kamesh on 8/4/2015.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={
         "classpath:config/spring/appContext-scheduler.xml",

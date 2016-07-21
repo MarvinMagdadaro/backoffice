@@ -1,13 +1,10 @@
-package yourwebproject2.model.repository;
-
-import yourwebproject2.framework.data.BaseJPARepository;
-import yourwebproject2.model.entity.Job;
+package com.trimark.backoffice.model.repository;
 
 import java.util.List;
 
-/**
- * @author: kameshr
- */
+import com.trimark.backoffice.framework.data.BaseJPARepository;
+import com.trimark.backoffice.model.entity.Job;
+
 public interface JobRepository extends BaseJPARepository<Job, Long> {
     /**
      *

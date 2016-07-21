@@ -1,21 +1,19 @@
-package yourwebproject2.service.impl;
+package com.trimark.backoffice.service.impl;
 
-import yourwebproject2.framework.data.BaseJPAServiceImpl;
-import yourwebproject2.model.entity.Job;
-import yourwebproject2.model.repository.JobRepository;
-import yourwebproject2.service.JobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.trimark.backoffice.framework.data.BaseJPAServiceImpl;
+import com.trimark.backoffice.model.entity.Job;
+import com.trimark.backoffice.model.repository.JobRepository;
+import com.trimark.backoffice.service.JobService;
+
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.List;
 
-/**
- * Created by Y.Kamesh on 8/2/2015.
- */
 @Service
 @Transactional
 public class JobServiceImpl extends BaseJPAServiceImpl<Job, Long> implements JobService {

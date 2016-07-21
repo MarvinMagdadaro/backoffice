@@ -1,15 +1,13 @@
-package yourwebproject2.core;
+package com.trimark.backoffice.core;
 
-import yourwebproject2.model.entity.Job;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.trimark.backoffice.model.entity.Job;
 
 import java.util.Date;
 import java.util.concurrent.Callable;
 
-/**
- * Created by Y.Kamesh on 8/2/2015.
- */
 public class JobExecutionThread implements Callable {
     private static Logger LOG = LoggerFactory.getLogger(JobExecutionThread.class);
     private Job job;

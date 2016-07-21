@@ -1,4 +1,4 @@
-package yourwebproject2.framework.data;
+package com.trimark.backoffice.framework.data;
 
 import org.hibernate.criterion.Order;
 
@@ -9,7 +9,6 @@ import java.util.Collection;
  * BaseService implementation for basic access to service
  * methods of CRUD operations on entity
  *
- * @author : Y Kamesh Rao
  */
 public abstract class BaseJPAServiceImpl<T extends Entity, ID extends Serializable> implements BaseService<T, ID> {
     protected BaseJPARepository<T, ID> baseJpaRepository;
@@ -37,6 +36,7 @@ public abstract class BaseJPAServiceImpl<T extends Entity, ID extends Serializab
     }
 
     public Collection<T> findAllByPage(int pageNum, int countPerPage, Order order) throws Exception {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    	return baseJpaRepository.findAllByPage(pageNum, countPerPage, order);
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

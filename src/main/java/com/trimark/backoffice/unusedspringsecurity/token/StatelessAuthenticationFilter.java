@@ -1,5 +1,7 @@
-package yourwebproject2.unusedspringsecurity.token;
+package com.trimark.backoffice.unusedspringsecurity.token;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -11,10 +13,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-/**
- * @author: kameshr
- */
 public class StatelessAuthenticationFilter extends GenericFilterBean {
+	private Logger LOG = LoggerFactory.getLogger(StatelessAuthenticationFilter.class); 
     private TokenAuthenticationService authenticationService;
 
     public StatelessAuthenticationFilter() {
@@ -27,7 +27,9 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
         Authentication authentication = authenticationService.getAuthentication(httpRequest);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
-        SecurityContextHolder.getContext().setAuthentication(null);
+        //SecurityContextHolder.getContext().setAuthentication(null);
+        LOG.info("authentication: " + authentication);
+        LOG.info("authentication.getHeader: " + httpRequest.getHeader("X-AUTH-TOKEN"));
     }
 
     public TokenAuthenticationService getAuthenticationService() {

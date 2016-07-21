@@ -1,17 +1,17 @@
-package yourwebproject2.model.repository.impl;
+package com.trimark.backoffice.model.repository.impl;
 
-import yourwebproject2.framework.data.BaseHibernateJPARepository;
-import yourwebproject2.model.entity.User;
-import yourwebproject2.model.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+
+import com.trimark.backoffice.framework.data.BaseHibernateJPARepository;
+import com.trimark.backoffice.model.entity.User;
+import com.trimark.backoffice.model.repository.UserRepository;
 
 /**
  *
  * User Repository Implementation
  *
- * @author: kameshr
  */
 @Repository
 public class UserRepositoryImpl extends BaseHibernateJPARepository<User, Long> implements UserRepository {

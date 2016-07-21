@@ -1,6 +1,3 @@
-/**
- * Created by Y.Kamesh on 4/6/2015.
- */
 var ywp2WebModule = angular.module('YWP2Web',
                                     [
                                         'ngAnimate',
@@ -13,8 +10,7 @@ var ywp2WebModule = angular.module('YWP2Web',
                                         'App'
                                     ]);
 
-ywp2WebModule.config(['$routeProvider',
-    function ($routeProvider){
+ywp2WebModule.config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
         $routeProvider
             .when('/home', {
                 controller: 'HomeController',
@@ -58,7 +54,27 @@ ywp2WebModule.config(['$routeProvider',
                 controllerAs: 'app'
             })
 
+            .when('/user', {
+                controller: 'UserController',
+                templateUrl: 'webui/views/user.html',
+                controllerAs: 'app'
+            })
+
+            .when('/role', {
+                controller: 'RoleController',
+                templateUrl: 'webui/views/role.html',
+                controllerAs: 'app'
+            })
+
+            .when('/permission', {
+                controller: 'PermissionController',
+                templateUrl: 'webui/views/permission.html',
+                controllerAs: 'app'
+            })
+
             .otherwise({ redirectTo: '/home' });
+        
+        $httpProvider.interceptors.push('responseObserver');
     }
 ]);
 
@@ -76,7 +92,7 @@ ywp2WebModule.run(['$rootScope', '$location', '$cookieStore', '$http',
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             console.log('received event: ' + event + ' from: ' + current + ' to go to next: ' + next);
             // redirect to login page if not logged in and trying to access a restricted page
-            var restrictedPage = $.inArray($location.path(), ['/login', '/register', '/admin.login', '/adm.register', '/admin', '/app', '/dashboard']) === -1;
+            var restrictedPage = $.inArray($location.path(), ['/login', '/register', '/admin.login', '/adm.register', '/admin']) === -1;
             var loggedIn = $rootScope.globals.currentUser;
             $rootScope.currentUser = $rootScope.globals.currentUser;
             if (restrictedPage && !loggedIn) {
@@ -91,3 +107,23 @@ ywp2WebModule.run(['$rootScope', '$location', '$cookieStore', '$http',
         });
     }
 ]);
+
+ywp2WebModule.factory('responseObserver', function responseObserver($q, $location) {
+    return {
+        'responseError': function(errorResponse) {
+            switch (errorResponse.status) {
+            case 401:
+                $location.path('/access-denied');
+                break;
+            case 403:
+                $location.path('/access-denied');
+                break;
+            case 500:
+                $location.path('/access-denied');
+                //$window.location = '/access-denied';
+                break;
+            }
+            return $q.reject(errorResponse);
+        }
+    };
+});

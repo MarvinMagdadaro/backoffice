@@ -1,11 +1,8 @@
-package yourwebproject2.framework.api;
+package com.trimark.backoffice.framework.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * Created by Y.Kamesh on 8/2/2015.
- */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class APIResponse {
     public static final String API_RESPONSE = "apiResponse";

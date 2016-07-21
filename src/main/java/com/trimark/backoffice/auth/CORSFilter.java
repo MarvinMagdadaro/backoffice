@@ -1,4 +1,4 @@
-package yourwebproject2.auth;
+package com.trimark.backoffice.auth;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -9,11 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * If required. not used here.
- *
- * @author: kameshr
- */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CORSFilter implements Filter {

@@ -1,9 +1,8 @@
-package yourwebproject2.model.dto;
+package com.trimark.backoffice.model.dto;
 
 /**
  * {"name":"job1", "metadataJsonString":"{}", "callbackUrl":"", "catId":1}
  *
- * @author: kameshr
  */
 public class JobDTO {
     String name;

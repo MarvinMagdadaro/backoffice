@@ -1,4 +1,4 @@
-package yourwebproject2.framework.data;
+package com.trimark.backoffice.framework.data;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -11,7 +11,6 @@ import java.util.Date;
  * JPAEntity to declare fields to be in each entity table like id
  * and creational timestamps
  *
- * @author : Y Kamesh Rao
  */
 @MappedSuperclass
 public abstract class JPAEntity<T extends Serializable> implements Entity {

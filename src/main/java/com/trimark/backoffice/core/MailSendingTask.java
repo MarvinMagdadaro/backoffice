@@ -1,7 +1,4 @@
-package yourwebproject2.core;
+package com.trimark.backoffice.core;
 
-/**
- * @author: kameshr
- */
 public class MailSendingTask {
 }

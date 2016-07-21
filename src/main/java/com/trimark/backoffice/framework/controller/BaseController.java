@@ -1,9 +1,10 @@
-package yourwebproject2.framework.controller;
+package com.trimark.backoffice.framework.controller;
 
-import yourwebproject2.model.dto.UserDTO;
 import org.apache.commons.lang.Validate;
 import org.json.JSONObject;
 import org.springframework.security.crypto.codec.Base64;
+
+import com.trimark.backoffice.model.dto.UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -14,7 +15,6 @@ import java.util.Scanner;
  * centralize control for doing any sort of common functionality.
  * e.g. extracting data from post request body
  *
- * @author : Y Kamesh Rao
  */
 public abstract class BaseController {
     protected static final String JSON_API_CONTENT_HEADER = "Content-type=application/json";

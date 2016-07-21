@@ -1,4 +1,4 @@
-package yourwebproject2.framework.data;
+package com.trimark.backoffice.framework.data;
 
 import org.hibernate.criterion.Order;
 
@@ -8,7 +8,6 @@ import java.util.Collection;
 /**
  * Generic JPA Repository protocol with common CRUD operations and some specific find operations
  *
- * Created by Y.Kamesh on 8/2/2015.
  */
 public interface BaseJPARepository<T extends Entity, ID extends Serializable> {
     /**

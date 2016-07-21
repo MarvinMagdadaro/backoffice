@@ -1,10 +1,5 @@
-package yourwebproject2.controller;
+package com.trimark.backoffice.controller;
 
-import yourwebproject2.framework.api.APIResponse;
-import yourwebproject2.framework.controller.BaseController;
-import yourwebproject2.model.dto.CategoryDTO;
-import yourwebproject2.model.entity.Category;
-import yourwebproject2.service.CategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import com.trimark.backoffice.framework.api.APIResponse;
+import com.trimark.backoffice.framework.controller.BaseController;
+import com.trimark.backoffice.model.dto.CategoryDTO;
+import com.trimark.backoffice.model.entity.Category;
+import com.trimark.backoffice.service.CategoryService;
+
 import java.util.List;
 
-/**
- * Category creation and get APIs
- *
- * Created by Y.Kamesh on 8/2/2015.
- */
 @Controller
 @RequestMapping("category")
 public class CategoryController extends BaseController {

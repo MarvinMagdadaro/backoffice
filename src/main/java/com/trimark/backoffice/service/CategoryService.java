@@ -1,15 +1,14 @@
-package yourwebproject2.service;
-
-import yourwebproject2.framework.data.BaseService;
-import yourwebproject2.framework.exception.NotFoundException;
-import yourwebproject2.model.entity.Category;
+package com.trimark.backoffice.service;
 
 import java.util.List;
+
+import com.trimark.backoffice.framework.data.BaseService;
+import com.trimark.backoffice.framework.exception.NotFoundException;
+import com.trimark.backoffice.model.entity.Category;
 
 /**
  * Brings in the basic CRUD service ops from BaseService. Insert additional ops here.
  *
- * Created by Y.Kamesh on 8/2/2015.
  */
 public interface CategoryService extends BaseService<Category, Long> {
     /**

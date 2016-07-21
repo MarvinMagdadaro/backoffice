@@ -1,10 +1,9 @@
-package yourwebproject2.framework.data;
+package com.trimark.backoffice.framework.data;
 
 /**
  * Proxy interface for all the concrete
  * entities to extend from.
  *
- * @author : Y Kamesh Rao
  */
 public interface Entity {
 }

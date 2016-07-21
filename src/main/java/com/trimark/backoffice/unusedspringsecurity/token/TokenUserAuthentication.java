@@ -1,4 +1,4 @@
-package yourwebproject2.unusedspringsecurity.token;
+package com.trimark.backoffice.unusedspringsecurity.token;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

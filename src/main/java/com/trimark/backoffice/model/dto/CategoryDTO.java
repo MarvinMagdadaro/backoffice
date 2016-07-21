@@ -1,10 +1,9 @@
-package yourwebproject2.model.dto;
+package com.trimark.backoffice.model.dto;
 
 /**
  *
  * {"name":"cat1", "priority":2, "parent":"pCat"}
  *
- * @author: kameshr
  */
 public class CategoryDTO {
     String name;

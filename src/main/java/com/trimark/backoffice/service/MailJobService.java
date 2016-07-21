@@ -1,12 +1,9 @@
-package yourwebproject2.service;
+package com.trimark.backoffice.service;
 
-import yourwebproject2.framework.data.BaseService;
-import yourwebproject2.model.entity.Job;
-import yourwebproject2.model.entity.User;
+import com.trimark.backoffice.framework.data.BaseService;
+import com.trimark.backoffice.model.entity.Job;
+import com.trimark.backoffice.model.entity.User;
 
-/**
- * @author: kameshr
- */
 public interface MailJobService extends BaseService<Job, Long> {
 
     /**

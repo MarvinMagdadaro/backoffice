@@ -1,13 +1,10 @@
-package yourwebproject2.core.tool;
+package com.trimark.backoffice.core.tool;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-/**
- * @author: kameshr
- */
 public class AdminUserTool {
     private static Logger LOG = LoggerFactory.getLogger(AdminUserTool.class);
     public static void main(String[] args) {

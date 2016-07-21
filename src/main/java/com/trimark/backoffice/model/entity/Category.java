@@ -1,16 +1,13 @@
-package yourwebproject2.model.entity;
+package com.trimark.backoffice.model.entity;
 
-import yourwebproject2.framework.data.JPAEntity;
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.trimark.backoffice.framework.data.JPAEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-/**
- * Category Entity
- *
- * Created by Y.Kamesh on 8/2/2015.
- */
+
 @Entity
 @Table(indexes = {  @Index(name="name_idx", columnList = "name", unique = true),
         @Index(name="priority_idx", columnList = "priority"),

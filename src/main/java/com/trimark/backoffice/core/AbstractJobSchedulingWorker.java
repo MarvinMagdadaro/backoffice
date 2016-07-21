@@ -1,15 +1,13 @@
-package yourwebproject2.core;
+package com.trimark.backoffice.core;
 
-import yourwebproject2.model.entity.Job;
-import yourwebproject2.service.JobService;
 import org.slf4j.Logger;
+
+import com.trimark.backoffice.model.entity.Job;
+import com.trimark.backoffice.service.JobService;
 
 import java.util.Map;
 import java.util.concurrent.Future;
 
-/**
- * @author: kameshr
- */
 public abstract class AbstractJobSchedulingWorker {
     void processResults(Map<Future<Job>, Job> result, JobService jobService, Logger LOG) {
         for(Future<Job> jobFuture : result.keySet()) {

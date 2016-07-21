@@ -1,21 +1,19 @@
-package yourwebproject2.core;
+package com.trimark.backoffice.core;
 
-import yourwebproject2.model.entity.Job;
-import yourwebproject2.model.entity.helper.CategoryPriorityComparator;
-import yourwebproject2.service.JobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+
+import com.trimark.backoffice.model.entity.Job;
+import com.trimark.backoffice.model.entity.helper.CategoryPriorityComparator;
+import com.trimark.backoffice.service.JobService;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-/**
- * Created by Y.Kamesh on 8/5/2015.
- */
 public class RetryJobSchedulingWorker extends AbstractJobSchedulingWorker {
     private static Logger LOG = LoggerFactory.getLogger(RetryJobSchedulingWorker.class);
 
