@@ -16,9 +16,6 @@ angular.module('App.Auth')
                 user.iterations = aesPack.iterations;
                 user.encryptedPassword = aesPack.ciphertext;
                 user.email = email;
-                console.log('encryptedPassword: '+user.encryptedPassword);
-                console.log('pass: '+user.password);
-                console.log('email: '+user.email);
                 $http.post(BackendCfg.url+'/api/user/authenticate', user )
                     .success(function (response) {
                         callback(response);
@@ -38,11 +35,6 @@ angular.module('App.Auth')
                 user.keySize = aesPack.keySize;
                 user.iterations = aesPack.iterations;
                 user.encryptedPassword = aesPack.ciphertext;
-
-                console.log('encryptedPassword: '+user.encryptedPassword);
-                console.log('pass: '+user.password);
-                console.log('email: '+user.email);
-                console.log('displayName: '+user.displayName);
 
                 $http.post(BackendCfg.url+'/api/user/register', user )
                     .success(function (response) {
@@ -91,9 +83,17 @@ angular.module('App.Auth')
             };
 
             service.createJWTToken = function (user, token) {
+            	var userpermissions = []; 
+        		userpermissions.push(user.role.rolename);
+            	if (user.role.permissions){
+	            	for(var i in user.role.permissions) {
+	            		userpermissions.push(user.role.permissions[i].permissionname);
+	            	}            	
+            	};
                 $rootScope.globals = {
                     currentUser: user,
                     token: token,
+                    permissions: userpermissions
                 };
 
                 $http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
@@ -112,12 +112,15 @@ angular.module('App.Auth')
 
             return service;
         }])
-    .factory('Base64', function () {
+    .factory('Base64', function ($rootScope) {
         /* jshint ignore:start */
 
         var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
         return {
+            allowed : function(permission) {
+            	return $rootScope.globals.permissions.indexOf(permission) >= 0; 
+            },        	
             encode: function (input) {
                 var output = "";
                 var chr1, chr2, chr3 = "";
@@ -196,4 +199,17 @@ angular.module('App.Auth')
         };
 
         /* jshint ignore:end */
-    });
+    })
+	.directive('allowed', function(Base64){
+	
+	    return {
+	
+	        link : function(scope, elem, attr) {
+	
+	            if(!Base64.allowed(attr.allowed)){
+	                elem.hide();
+	            }
+	        }
+	    };
+	})    
+    ;
