@@ -4,9 +4,7 @@ angular.module('App.Auth')
 RegisterController.$inject = ['$location', '$scope', '$rootScope', 'AuthService', 'FlashMessage'];
 function RegisterController($location, $scope, $rootScope, AuthService, FlashMessage) {
     var rc = this;
-    console.log('register controller');
     rc.register = function (admin) {
-        console.log('received the register event for user: '+rc.user.username);
         $rootScope.isSubmitted = true;
         rc.dataLoading = true;
         rc.user.admin = admin;

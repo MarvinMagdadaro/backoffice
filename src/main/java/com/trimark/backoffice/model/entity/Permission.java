@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -24,9 +25,15 @@ public class Permission extends JPAEntity<Long> implements GrantedAuthority {
 
     @NotNull(message = "{error.permission.permissionname.null}")
     @NotEmpty(message = "{error.permission.permissionname.empty}")
-    @Size(max = 50, message = "{permission.permissionname.role.max}")
+    @Size(max = 50, message = "{error.permission.permissionname.max}")
     @Column(name = "permissionname", length = 50)
     private String permissionname;
+    
+    @NotNull 
+    @NotBlank
+    @Column(name = "permissiondesc", length = 255)
+    private String permissiondesc;
+    
 /*    
     @OneToMany(fetch = FetchType.EAGER)  
     @JoinTable(name = "role_permissions",   
@@ -42,6 +49,14 @@ public class Permission extends JPAEntity<Long> implements GrantedAuthority {
 
     public void setPermissionname(String permissionname) {
         this.permissionname = permissionname;
+    }
+    
+    public String getPermissiondesc() {
+        return permissiondesc;
+    }
+
+    public void setPermissiondesc(String permissiondesc) {
+        this.permissiondesc = permissiondesc;
     }
 /*
     public List<Role> getPermRoles() {

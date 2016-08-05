@@ -1,11 +1,10 @@
 package com.trimark.backoffice.model.dto;
 
-import java.util.List;
-
 public class PermissionDTO {
 
 	private long id;
     private String permissionname;
+    private String permissiondesc;
     
     public long getId() {
         return id;
@@ -21,6 +20,14 @@ public class PermissionDTO {
 
     public void setPermissionname(String permissionname) {
         this.permissionname = permissionname;
+    }
+
+    public String getPermissiondesc() {
+        return permissiondesc;
+    }
+
+    public void setPermissiondesc(String permissiondesc) {
+        this.permissiondesc = permissiondesc;
     }
 
     @Override

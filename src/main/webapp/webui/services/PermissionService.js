@@ -11,7 +11,6 @@ angular.module('App').
 										return response.data;
 									}, 
 									function(errResponse){
-										console.error('Error while fetching permissions');
 										return $q.reject(errResponse);
 									}
 							);
@@ -24,7 +23,6 @@ angular.module('App').
 										return response.data;
 									}, 
 									function(errResponse){
-										console.error('Error while creating permission');
 										return $q.reject(errResponse);
 									}
 							);
@@ -37,7 +35,6 @@ angular.module('App').
 										return response.data;
 									}, 
 									function(errResponse){
-										console.error('Error while updating permission');
 										return $q.reject(errResponse);
 									}
 							);
@@ -50,7 +47,6 @@ angular.module('App').
 										return response.data;
 									}, 
 									function(errResponse){
-										console.error('Error while deleting permission');
 										return $q.reject(errResponse);
 									}
 							);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="YWP2Web">
+<html ng-app="TGWeb">
     <link lang="en">
     <meta charset="UTF-8">
     <title>Trimark Backoffice</title>
@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="res/js/bootstrap/dist/css/bootstrap.min.css" />
 
     <script src="res/js/jquery/dist/jquery.js"></script>
+    <script src="res/js/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="res/js/angular/angular.js"></script>
     <script src="res/js/angular-animate/angular-animate.js"></script>
     <script src="res/js/angular-route/angular-route.js"></script>
     <script src="res/js/angular-resource/angular-resource.js"></script>
     <script src="res/js/angular-messages/angular-messages.js"></script>
     <script src="res/js/angular-cookies/angular-cookies.js"></script>
+    <script src="res/js/angular-ui/angular-ui-bootstrap.min.js"></script>
     <script src="res/js/cryptojs/rollups/aes.js"></script>
     <script src="res/js/cryptojs/rollups/pbkdf2.js"></script>
     <script src="webui/modules/Common.js"></script>
@@ -29,14 +31,17 @@
     <script src="webui/controllers/UserController.js"></script>
     <script src="webui/controllers/RoleController.js"></script>
     <script src="webui/controllers/PermissionController.js"></script>
+    <script src="webui/controllers/BodyController.js"></script>
     <script src="webui/services/AppService.js"></script>
     <script src="webui/services/AuthService.js"></script>
     <script src="webui/services/UserService.js"></script>
     <script src="webui/services/RoleService.js"></script>
     <script src="webui/services/PermissionService.js"></script>
-    <script src="webui/YWP2Web.js"></script>
+    <script src="webui/services/ModalService.js"></script>
+    <script src="webui/services/AlertService.js"></script>
+    <script src="webui/TGWeb.js"></script>
 </head>
-<body class="ng-cloak">
+<body class="ng-cloak" ng-controller="BodyController">
     <div ng-view></div>
 </body>
 </html>

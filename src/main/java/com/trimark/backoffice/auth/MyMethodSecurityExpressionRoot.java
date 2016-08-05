@@ -19,11 +19,7 @@ public class MyMethodSecurityExpressionRoot extends SecurityExpressionRoot imple
     }
  
     public  boolean adminOnly() {
-    	LOG.info("haha -- check if this function is used by admin role only");
-    	this.setDefaultRolePrefix(null);
-    	System.out.println("this.hasAuthority(ROLE_ADMIN)"+this.hasAuthority("ROLE_ADMIN"));
-    	return true;
-    	//return  this.hasAuthority("ROLE_ADMIN");
+    	return  this.hasAnyAuthority("ROLE_ADMIN");
     }
      
     public void setFilterObject(Object filterObject) {

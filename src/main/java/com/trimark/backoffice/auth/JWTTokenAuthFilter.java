@@ -48,7 +48,7 @@ public class JWTTokenAuthFilter extends OncePerRequestFilter {
         // no auth route matching
         boolean needsAuthentication = false;
 
-        LOG.info("request.getRequestURI(): " + request.getRequestURI());
+        //LOG.info("request.getRequestURI(): " + request.getRequestURI());
 
         for (Pattern p : AUTH_ROUTES) {
             if (p.matcher(route).matches()) {
@@ -74,11 +74,9 @@ public class JWTTokenAuthFilter extends OncePerRequestFilter {
                     authHeader = null;
                 } else {
                     authHeader = authenticationHeader;
-                    LOG.info("authentication: " + authenticationHeader);
                 }
             } else {
                 authHeader = authorizationHeader;
-                LOG.info("authorization: " + authorizationHeader);
             }
 
             if (StringUtils.isBlank(authHeader) || !authHeader.startsWith("Bearer ")) {

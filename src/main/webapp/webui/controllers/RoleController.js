@@ -1,8 +1,8 @@
 angular.module('App')
-    .controller('RoleController', ['$location', '$scope', '$rootScope', 'RoleService', 'FlashMessage',   
-function RoleController($location, $scope, $rootScope, RoleService, FlashMessage) {
+    .controller('RoleController', ['$location', '$scope', '$rootScope', 'RoleService', 'ModalService', 'AlertService', 'FlashMessage',   
+function RoleController($location, $scope, $rootScope, RoleService, ModalService, AlertService, FlashMessage) {
 	var self = this;
-    self.role={id:null,rolename:''};
+    self.role={id:null,rolename:'',roledesc:''};
 	self.roles=[];
 	self.selectedItem;
 	
@@ -11,64 +11,104 @@ function RoleController($location, $scope, $rootScope, RoleService, FlashMessage
         alert(self.selectedItem);
     };
     
+    self.reset = function(){
+    	self.role={id:null,rolename:'',roledesc:''};
+        $scope.myForm.$setPristine(); //reset Form
+    };
+    
     self.fetchAllRoles = function(){
     	RoleService.fetchAllRoles()
     	.then(
-    			function(d) {
-    				self.roles = d;
-    			},
-    			function(errResponse){
-    				console.error('Error while fetching Roles');
-    			}
+			function(d) {
+				self.roles = d;
+			},
+			function(errResponse){
+				AlertService.add('danger', 'Error while fetching Roles.');
+			}
     	);
     };
     
     self.createRole = function(role){
-    	console.log('AppControl create role ',role);
-    	RoleService.createRole(role)
-	              .then(
-	            		  self.fetchAllRoles, 
-			              function(errResponse){
-				               console.error('Error while creating Role.');
-			              }	
+        var modalOptions = {
+                closeButtonText: 'Cancel',
+                actionButtonText: 'Add Role',
+                headerText: 'Add ' + role.rolename + '?',
+                bodyText: 'Are you sure you want to add this role?'
+            };
+    	
+        ModalService.showModal({}, modalOptions).then(function (result) {
+        	RoleService.createRole(role)
+              .then(
+        		  function(d){
+    				  self.reset();
+            		  self.fetchAllRoles();	
+            		  AlertService.add('success', 'Role added successfully.');
+	              },	
+        		  function(errResponse){
+    				  AlertService.add('danger', 'Error while adding Role.');
+	              }	
             );
+        });
+    	
     };
     
     self.updateRole = function(role, id){
-        RoleService.updateRole(role, id)
-	              .then(
-	            		  self.fetchAllRoles, 
-			              function(errResponse){
-				               console.error('Error while updating Role.');
-			              }	
+        var modalOptions = {
+                closeButtonText: 'Cancel',
+                actionButtonText: 'Update Role',
+                headerText: 'Update ' + role.rolename + '?',
+                bodyText: 'Are you sure you want to update this role?'
+            };
+    	
+        ModalService.showModal({}, modalOptions).then(function (result) {
+	        RoleService.updateRole(role, id)
+              .then(
+        		  function(d){
+    				  self.reset();
+            		  self.fetchAllRoles();	
+            		  AlertService.add('success', 'Role updated successfully.');
+	              },	
+        		  function(errResponse){
+    				  AlertService.add('danger', 'Error while updating Role.');
+	              }	
             );
+        });
     };
 
-    self.deleteRole = function(id){
-    	RoleService.deleteRole(id)
-	              .then(
-	            		  self.fetchAllRoles, 
-			              function(errResponse){
-				               console.error('Error while deleting Role.');
-			              }	
+    self.deleteRole = function(role){
+        var modalOptions = {
+                closeButtonText: 'Cancel',
+                actionButtonText: 'Delete Role',
+                headerText: 'Delete ' + role.rolename + '?',
+                bodyText: 'Are you sure you want to delete this role?'
+            };
+    	
+        ModalService.showModal({}, modalOptions).then(function (result) {
+	    	RoleService.deleteRole(role.id)
+              .then(
+        		  function(d){
+    				  self.reset();
+            		  self.fetchAllRoles();	
+            		  AlertService.add('success', 'Role deleted successfully.');
+	              },	
+        		  function(errResponse){
+    				  AlertService.add('danger', 'Error while deleting Role.');
+	              }	
             );
+        });
     };
 
     self.fetchAllRoles();
 
     self.submit = function() {
         if(self.role.id==null){
-            console.log('Saving New Role', self.role);    
             self.createRole(self.role);
         }else{
         	self.updateRole(self.role, self.role.id);
-            console.log('Role updated with id ', self.role.id);
         }
-        self.reset();
     };
         
     self.edit = function(id){
-        console.log('id to be edited', id);
         for(var i = 0; i < self.roles.length; i++){
             if(self.roles[i].id == id) {
                 self.role = angular.copy(self.roles[i]);
@@ -77,18 +117,13 @@ function RoleController($location, $scope, $rootScope, RoleService, FlashMessage
         }
     };
         
-    self.remove = function(id){
-        console.log('id to be deleted', id);
-        if(self.role.id == id) {//clean form if the role to be deleted is shown there.
-        	self.reset();
-        }
-        self.deleteRole(id);
+    self.remove = function(role){
+        self.deleteRole(role);
     };
 
-    
-    self.reset = function(){
-    	self.role={id:null,rolename:''};
-        $scope.myForm.$setPristine(); //reset Form
+    self.cancel = function(){
+    	self.reset();
+        self.fetchAllRoles();
     };
     
 }]);

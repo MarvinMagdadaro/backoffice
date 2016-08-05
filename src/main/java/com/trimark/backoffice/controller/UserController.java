@@ -163,15 +163,8 @@ public class UserController extends BaseController {
 
     //-------------------Retrieve All Users--------------------------------------------------------
     @RequestMapping(value = "/list/", method = RequestMethod.GET)
-    //@PreAuthorize("adminOnly()")
-    @PreAuthorize("hasAnyAuthority('CTRL_USER_LIST_GET')")
+    @PreAuthorize("hasAnyAuthority('CTRL_USER_LIST')")
     public ResponseEntity<List<UserDTO>> listAllUsers(HttpServletRequest request) throws Exception {
-    	LOG.info("request.isUserInRole(someAuthority): "+request.isUserInRole("someAuthority"));
-    	LOG.info("request.isUserInRole(ROLE_ADMIN): "+request.isUserInRole("ROLE_ADMIN"));
-    	LOG.info("request.isUserInRole(CTRL_USER_LIST_GET): "+request.isUserInRole("CTRL_USER_LIST_GET"));
-    	LOG.info("SecurityContextHolder.getContext().getAuthentication(): "+SecurityContextHolder.getContext().getAuthentication());
-    	LOG.info("SecurityContextHolder.getContext().getAuthentication().getPrincipal(): "+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-    	
         List<User> users = (List<User>) userService.getUsers(0, 10, Order.asc("displayName"));
         if(users.isEmpty()){
             return new ResponseEntity<List<UserDTO>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND

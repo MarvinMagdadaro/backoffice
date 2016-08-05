@@ -17,6 +17,14 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a ng-if="!currentUser" href="#/login">Sign In</a></li>
                 <li><a ng-if="currentUser" href="#/app">Hi {{currentUser.displayName}}!</a></li>
+				<li class="dropdown">
+				<a allowed="ROLE_ADMIN" href="#/app" class="dropdown-toggle" data-toggle="dropdown">Administration <b class = "caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="#/user" allowed="ROLE_ADMIN">User Management</a></li>  
+						<li><a href="#/role" allowed="ROLE_ADMIN">Role Management</a></li>
+						<li><a href="#/permission" allowed="ROLE_ADMIN">Permission Management</a></li>
+					</ul> 
+				</li> 
                 <li><a ng-if="currentUser" ng-controller="AppController as app" ng-click="app.logout()" style="cursor: pointer;">Sign Out</a></li>
             </ul>
         </div>

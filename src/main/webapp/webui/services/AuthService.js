@@ -20,7 +20,6 @@ angular.module('App.Auth')
                     .success(function (response) {
                         callback(response);
                     });
-                console.log('login event posted...');
             };
 
             service.register = function (user, callback) {
@@ -44,7 +43,6 @@ angular.module('App.Auth')
 
             service.logout = function (callback) {
                 BackendCfg.setupHttp($http);
-                console.log('logout!!!');
 
                 $http.get(BackendCfg.url+'/api/user/logout')
                     .then(function (response) {
@@ -104,7 +102,6 @@ angular.module('App.Auth')
             };
 
             service.clearCredentials = function () {
-                console.log("clearing credentials...");
                 $rootScope.globals = {};
                 $cookieStore.remove('globals');
                 $http.defaults.headers.common.Authorization = '';
@@ -119,7 +116,10 @@ angular.module('App.Auth')
 
         return {
             allowed : function(permission) {
-            	return $rootScope.globals.permissions.indexOf(permission) >= 0; 
+            	if ($rootScope.globals.permissions){
+            		return $rootScope.globals.permissions.indexOf(permission) >= 0;
+            	}
+            	return false;
             },        	
             encode: function (input) {
                 var output = "";

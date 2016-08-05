@@ -6,6 +6,7 @@ public class RoleDTO {
 
 	private long id;
     private String rolename;
+    private String roledesc;
     private List <PermissionDTO> permissions;
     
     public long getId() {
@@ -30,6 +31,14 @@ public class RoleDTO {
 
     public void setRolename(String rolename) {
         this.rolename = rolename;
+    }
+
+	public String getRoledesc() {
+        return roledesc;
+    }
+
+    public void setRoledesc(String roledesc) {
+        this.roledesc = roledesc;
     }
 
     @Override

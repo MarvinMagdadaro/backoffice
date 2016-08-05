@@ -80,6 +80,7 @@ public class PermissionController extends BaseController {
  
         Permission nPermission = new Permission();
         nPermission.setPermissionname(permission.getPermissionname());
+        nPermission.setPermissiondesc(permission.getPermissiondesc());
         permissionService.insert(nPermission);
  
         HttpHeaders headers = new HttpHeaders();
@@ -103,6 +104,7 @@ public class PermissionController extends BaseController {
         }
  
         currentPermission.setPermissionname(permission.getPermissionname());
+        currentPermission.setPermissiondesc(permission.getPermissiondesc());
          
         permissionService.update(currentPermission);
         return new ResponseEntity<PermissionDTO>(permission, HttpStatus.OK);

@@ -1,68 +1,108 @@
 angular.module('App')
-    .controller('UserController', ['$location', '$scope', '$rootScope', 'UserService', 'FlashMessage',   
-function UserController($location, $scope, $rootScope, UserService, FlashMessage) {
+    .controller('UserController', ['$location', '$scope', '$rootScope', 'UserService', 'ModalService', 'AlertService', 'FlashMessage',   
+function UserController($location, $scope, $rootScope, UserService, ModalService, AlertService, FlashMessage) {
 	var self = this;
-    self.user={id:null,displayName:'',email:''};
+    self.user={id:null,displayName:'',email:'',role:[{id:null,rolename:'',roledesc:''}]};
 	self.users=[];
 
+    self.reset = function(){
+    	//self.user={id:null,displayName:'',email:''};
+        self.user={id:null,displayName:'',email:'',role:[{id:null,rolename:'',roledesc:''}]};
+        $scope.myForm.$setPristine(); //reset Form
+    };
+    
     self.fetchAllUsers = function(){
     	UserService.fetchAllUsers()
     	.then(
-    			function(d) {
-    				self.users = d;
-    			},
-    			function(errResponse){
-    				console.error('Error while fetching Users');
-    			}
+			function(d) {
+				self.users = d;
+			},
+			function(errResponse){
+				AlertService.add('danger', 'Error while fetching Users.');
+			}
     	);
     };
     
     self.createUser = function(user){
-    	console.log('AppControl create user ',user);
-    	UserService.createUser(user)
-	              .then(
-	            		  self.fetchAllUsers, 
-			              function(errResponse){
-				               console.error('Error while creating User.');
-			              }	
+        var modalOptions = {
+                closeButtonText: 'Cancel',
+                actionButtonText: 'Add User',
+                headerText: 'Add ' + user.displayName + '?',
+                bodyText: 'Are you sure you want to add this user?'
+            };
+    	
+        ModalService.showModal({}, modalOptions).then(function (result) {
+	    	UserService.createUser(user)
+              .then(
+        		  function(d){
+    				  self.reset();
+            		  self.fetchAllUsers();	
+            		  AlertService.add('success', 'User added successfully.');
+	              },	
+	              function(errResponse){
+		               AlertService.add('danger', 'Error while adding User.');
+	              }	
             );
+        });
     };
     
     self.updateUser = function(user, id){
-        UserService.updateUser(user, id)
-	              .then(
-	            		  self.fetchAllUsers, 
-			              function(errResponse){
-				               console.error('Error while updating User.');
-			              }	
+        var modalOptions = {
+                closeButtonText: 'Cancel',
+                actionButtonText: 'Update User',
+                headerText: 'Update ' + user.displayName + '?',
+                bodyText: 'Are you sure you want to update this user?'
+            };
+    	
+        ModalService.showModal({}, modalOptions).then(function (result) {
+	        UserService.updateUser(user, id)
+              .then(
+        		  function(d){
+    				  self.reset();
+            		  self.fetchAllUsers();	
+            		  AlertService.add('success', 'User updated successfully.');
+	              },	
+	              function(errResponse){
+		               AlertService.add('danger', 'Error while updating User.');
+	              }	
             );
+        });
     };
 
-    self.deleteUser = function(id){
-    	UserService.deleteUser(id)
-	              .then(
-	            		  self.fetchAllUsers, 
-			              function(errResponse){
-				               console.error('Error while deleting User.');
-			              }	
+    self.deleteUser = function(user){
+        var modalOptions = {
+                closeButtonText: 'Cancel',
+                actionButtonText: 'Delete User',
+                headerText: 'Delete ' + user.displayName + '?',
+                bodyText: 'Are you sure you want to delete this user?'
+            };
+    	
+        ModalService.showModal({}, modalOptions).then(function (result) {
+	    	UserService.deleteUser(user.id)
+              .then(
+        		  function(d){
+    				  self.reset();
+            		  self.fetchAllUsers();	
+            		  AlertService.add('success', 'User deleted successfully.');
+	              },	
+	              function(errResponse){
+		               AlertService.add('danger', 'Error while deleting User.');
+	              }	
             );
+        });
     };
 
     self.fetchAllUsers();
 
     self.submit = function() {
         if(self.user.id==null){
-            console.log('Saving New User', self.user);    
             self.createUser(self.user);
         }else{
         	self.updateUser(self.user, self.user.id);
-            console.log('User updated with id ', self.user.id);
         }
-        self.reset();
     };
         
     self.edit = function(id){
-        console.log('id to be edited', id);
         for(var i = 0; i < self.users.length; i++){
             if(self.users[i].id == id) {
                 self.user = angular.copy(self.users[i]);
@@ -71,18 +111,13 @@ function UserController($location, $scope, $rootScope, UserService, FlashMessage
         }
     };
         
-    self.remove = function(id){
-        console.log('id to be deleted', id);
-        if(self.user.id == id) {//clean form if the user to be deleted is shown there.
-        	self.reset();
-        }
-        self.deleteUser(id);
+    self.remove = function(user){
+        self.deleteUser(user);
     };
 
-    
-    self.reset = function(){
-    	self.user={id:null,displayName:'',email:''};
-        $scope.myForm.$setPristine(); //reset Form
+    self.cancel = function(){
+        self.reset();
+        self.fetchAllUsers();
     };
     
 }]);

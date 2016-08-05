@@ -6,11 +6,12 @@ function LoginController($scope, $rootScope, $location, AuthService) {
 
     (function initController() {
         // reset login status
+        lc.dataLoading = false;
+        $rootScope.isSubmitted = false;
         AuthService.clearCredentials();
     })();
 
     lc.login = function () {
-        console.log('received the login event for user: '+lc.user.email);
         lc.dataLoading = true;
         $rootScope.isSubmitted = true;
         AuthService.login(lc.user.email, lc.user.password, function (response) {

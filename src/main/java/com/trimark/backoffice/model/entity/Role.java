@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -33,7 +34,13 @@ public class Role extends JPAEntity<Long> implements GrantedAuthority {
     @Size(max = 50, message = "{error.roles.role.max}")
     @Column(name = "rolename", length = 50)
     private String rolename;
-/*
+
+    @NotNull 
+    @NotBlank
+    @Column(name = "roledesc", length = 255)
+    private String roledesc;
+
+    /*
     @OneToMany(fetch = FetchType.EAGER)  
     @JoinTable(name = "user_roles",   
         joinColumns        = {@JoinColumn(name = "role_id", referencedColumnName = "id")},  
@@ -54,6 +61,14 @@ public class Role extends JPAEntity<Long> implements GrantedAuthority {
 
     public void setRolename(String rolename) {
         this.rolename = rolename;
+    }
+
+    public String getRoledesc() {
+        return roledesc;
+    }
+
+    public void setRoledesc(String roledesc) {
+        this.roledesc = roledesc;
     }
 /*
     public Set<User> getUserRoles() {

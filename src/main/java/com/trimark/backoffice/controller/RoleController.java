@@ -81,6 +81,7 @@ public class RoleController extends BaseController {
  
         Role nRole = new Role();
         nRole.setRolename(role.getRolename());
+        nRole.setRoledesc(role.getRoledesc());
         roleService.insert(nRole);
  
         HttpHeaders headers = new HttpHeaders();
@@ -104,6 +105,7 @@ public class RoleController extends BaseController {
         }
  
         currentRole.setRolename(role.getRolename());
+        currentRole.setRoledesc(role.getRoledesc());
          
         roleService.update(currentRole);
         return new ResponseEntity<RoleDTO>(role, HttpStatus.OK);

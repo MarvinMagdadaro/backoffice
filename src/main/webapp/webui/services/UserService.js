@@ -11,7 +11,6 @@ angular.module('App').
 										return response.data;
 									}, 
 									function(errResponse){
-										console.error('Error while fetching users');
 										return $q.reject(errResponse);
 									}
 							);
@@ -24,7 +23,6 @@ angular.module('App').
 										return response.data;
 									}, 
 									function(errResponse){
-										console.error('Error while creating user');
 										return $q.reject(errResponse);
 									}
 							);
@@ -37,7 +35,6 @@ angular.module('App').
 										return response.data;
 									}, 
 									function(errResponse){
-										console.error('Error while updating user');
 										return $q.reject(errResponse);
 									}
 							);
@@ -50,7 +47,6 @@ angular.module('App').
 										return response.data;
 									}, 
 									function(errResponse){
-										console.error('Error while deleting user');
 										return $q.reject(errResponse);
 									}
 							);
