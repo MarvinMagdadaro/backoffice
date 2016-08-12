@@ -4,12 +4,9 @@ function RoleController($location, $scope, $rootScope, RoleService, ModalService
 	var self = this;
     self.role={id:null,rolename:'',roledesc:''};
 	self.roles=[];
-	self.selectedItem;
-	
-	self.dropboxitemselected = function (item) {
- 		self.selectedItem = item;
-        alert(self.selectedItem);
-    };
+	$scope.currentPage = 1;
+	$scope.itemsPerPage = 1;
+   	$scope.maxSize = 5;
     
     self.reset = function(){
     	self.role={id:null,rolename:'',roledesc:''};

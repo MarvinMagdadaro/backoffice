@@ -4,6 +4,9 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
 	var self = this;
     self.user={id:null,displayName:'',email:'',role:[{id:null,rolename:'',roledesc:''}]};
 	self.users=[];
+	$scope.currentPage = 1;
+	$scope.itemsPerPage = 1;
+   	$scope.maxSize = 5;
 
     self.reset = function(){
     	//self.user={id:null,displayName:'',email:''};

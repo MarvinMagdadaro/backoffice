@@ -195,20 +195,27 @@ angular.module('App.Auth')
                 } while (i < input.length);
 
                 return output;
-            }
+            },
+
+            isLoggedIn: function(){
+                return ($rootScope.globals.currentUser);
+            }            
         };
 
         /* jshint ignore:end */
     })
-	.directive('allowed', function(Base64){
+	.directive('allowed', function(Base64, $rootScope){
 	
 	    return {
 	
 	        link : function(scope, elem, attr) {
-	
-	            if(!Base64.allowed(attr.allowed)){
-	                elem.hide();
-	            }
+	        	$rootScope.$watch(Base64.isLoggedIn, function() {
+		            if(Base64.allowed(attr.allowed)){
+		                elem.show();
+		            } else {
+		                elem.hide();
+		            }
+	            });  
 	        }
 	    };
 	})    

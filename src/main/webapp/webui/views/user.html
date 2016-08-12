@@ -1,95 +1,114 @@
-<div ng-include="'webui/views/common/header.html'"></div>
-
-<div class="container" >
-    <div class="generic-container" ng-controller="UserController as ctrl">
-        <div class="panel panel-default">
-            <div class="panel-heading"><span class="lead">User Form </span></div>
-            <div class="formcontainer">
-                <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
-					<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()">{{ alert.msg }}</uib-alert>
-                    <input type="hidden" ng-model="ctrl.user.id" />
-                    <div class="row">
-                        <div class="form-group col-md-12" ng-class="{ 'has-error': myForm.name.$dirty && (myForm.name.$error.required || myForm.name.$error.maxlength)}">
-                            <label class="col-md-2 control-lable" for="name">User Name</label>
-                            <div class="col-md-7">
-                                <input type="text" ng-model="ctrl.user.displayName" name="name" ng-maxlength="255" class="form-control input-sm" placeholder="Enter User Name" required/>
-                                <span ng-show="myForm.name.$dirty && myForm.name.$error.required" class="help-block">User Name is a required field</span>
-                                <span ng-show="myForm.name.$dirty && myForm.name.$error.maxlength" class="help-block">User Name is too long</span>
-                            </div>
-                        </div>
+<div class="container-fluid" ng-controller="UserController as ctrl">
+	<div class="row">
+		<div class="col-lg-12">
+	        <div class="panel panel-default">
+	            <div class="panel-heading">User Form</div>
+				<div class="panel-body">
+					<div class="col-sm-10">
+	                <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
+						<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()">{{ alert.msg }}</uib-alert>
+	                    <input type="hidden" ng-model="ctrl.user.id" />
+	                    <div class="row">
+	                        <div class="form-group" ng-class="{ 'has-error': myForm.name.$dirty && (myForm.name.$error.required || myForm.name.$error.maxlength)}">
+	                            <label class="col-sm-2 control-lable" for="name">User Name</label>
+	                            <div class="col-sm-5">
+	                                <input type="text" ng-model="ctrl.user.displayName" name="name" ng-maxlength="255" class="form-control input-sm" placeholder="Enter User Name" required/>
+	                                <span ng-show="myForm.name.$dirty && myForm.name.$error.required" class="help-block">User Name is a required field</span>
+	                                <span ng-show="myForm.name.$dirty && myForm.name.$error.maxlength" class="help-block">User Name is too long</span>
+	                            </div>
+	                        </div>
+	                    </div>
+	                      
+	                    <div class="row">
+	                        <div class="form-group" ng-class="{ 'has-error': myForm.email.$dirty && (myForm.email.$error.required || myForm.email.$error.maxlength || myForm.email.$error.email)}">
+	                            <label class="col-sm-2 control-lable" for="email">Email</label>
+	                            <div class="col-sm-5">
+	                                <input type="email" ng-model="ctrl.user.email" name="email" ng-maxlength="255" class="form-control input-sm" placeholder="Enter Email" required/>
+	                                <span ng-show="myForm.email.$dirty && myForm.email.$error.required">Email is a required field</span>
+	                                <span ng-show="myForm.email.$dirty && myForm.email.$error.maxlength">Email is too long</span>
+	                                <span ng-show="myForm.email.$dirty && myForm.email.$error.email">Email is invalid</span>
+	                            </div>
+	                        </div>
+	                    </div>
+	
+						<div class="row">
+	                        <div class="form-group" ng-class="{ 'has-error': myForm.role.$dirty && myForm.role.$error.required}">
+	                            <label class="col-sm-2 control-lable" for="role">Role</label>
+								<div class="col-sm-5" ng-controller="RoleController as rctrl">
+									<select name="role" class="form-control input-sm" required
+							              ng-model="ctrl.user.role.id"
+							              ng-options="role.id as role.roledesc for role in rctrl.roles">
+							              <option value="">-Select Role-</option>
+									</select>
+	                                <span ng-show="myForm.role.$dirty && myForm.role.$error.required">Role is a required field</span>
+								</div>                    
+	                        </div>
+	                    </div>
+	
+						<div class="row">
+							<div class="form-group" >
+								<div class="col-sm-offset-2 col-sm-7">
+									<div ng-if="!ctrl.user.id">
+			                            <input type="submit"  value="Add" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
+			                            <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset</button>
+									</div>
+									<div ng-if="ctrl.user.id">
+			                            <input type="submit"  value="Update" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
+			                            <button type="button" ng-click="ctrl.cancel()" class="btn btn-warning btn-sm" >Cancel</button>
+									</div>
+								</div>
+	                        </div>
+	                    </div>
+	                </form>
                     </div>
-                      
-                    
-                    <div class="row">
-                        <div class="form-group col-md-12" ng-class="{ 'has-error': myForm.email.$dirty && (myForm.email.$error.required || myForm.email.$error.maxlength || myForm.email.$error.email)}">
-                            <label class="col-md-2 control-lable" for="email">Email</label>
-                            <div class="col-md-7">
-                                <input type="email" ng-model="ctrl.user.email" name="email" ng-maxlength="255" class="form-control input-sm" placeholder="Enter Email" required/>
-                                <span ng-show="myForm.email.$dirty && myForm.email.$error.required">Email is a required field</span>
-                                <span ng-show="myForm.email.$dirty && myForm.email.$error.maxlength">Email is too long</span>
-                                <span ng-show="myForm.email.$dirty && myForm.email.$error.email">Email is invalid</span>
-                            </div>
-                        </div>
-                    </div>
-
-					<div class="row">
-                        <div class="form-group col-md-12" ng-class="{ 'has-error': myForm.role.$dirty && myForm.role.$error.required}">
-                            <label class="col-md-2 control-lable" for="role">Role</label>
-							<div class="col-md-7" ng-controller="RoleController as rctrl">
-								<select name="role" class="form-control input-sm" required
-						              ng-model="ctrl.user.role.id"
-						              ng-options="role.id as role.roledesc for role in rctrl.roles">
-						              <option value="">-Select Role-</option>
-								</select>
-                                <span ng-show="myForm.role.$dirty && myForm.role.$error.required">Role is a required field</span>
-							</div>                    
-                        </div>
-                    </div>
-
-					<div class="row">
-                        <div class="form-actions floatRight">
-							<div ng-if="!ctrl.user.id">
-	                            <input type="submit"  value="Add" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
-	                            <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset</button>
-							</div>
-							<div ng-if="ctrl.user.id">
-	                            <input type="submit"  value="Update" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
-	                            <button type="button" ng-click="ctrl.cancel()" class="btn btn-warning btn-sm" >Cancel</button>
-							</div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>    
-        <div class="panel panel-default">
-              <!-- Default panel contents -->
-            <div class="panel-heading"><span class="lead">List of Users </span></div>
-            <div class="tablecontainer">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID.</th>
-                            <th>User Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th width="20%"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="u in ctrl.users">
-                            <td><span ng-bind="u.id"></span></td>
-                            <td><span ng-bind="u.displayName"></span></td>
-                            <td><span ng-bind="u.email"></span></td>
-                            <td><span ng-bind="u.role.roledesc"></span></td>
-                            <td>
-                            <button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success btn-sm custom-width">Edit</button>  
-                            <button type="button" ng-click="ctrl.remove(u)" class="btn btn-danger btn-sm custom-width">Remove</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>		
-    <div ng-include="'webui/views/common/footer.html'"></div>
+	            </div>
+	        </div>    
+	     </div>    
+	</div>    
+	<div class="row">
+		<div class="col-lg-12">
+	        <div class="panel panel-default">
+	            <div class="panel-heading">List of Users</div>
+				<div class="panel-body">
+	                <table class="table table-bordered">
+	                    <thead>
+	                        <tr>
+	                            <th>ID</th>
+	                            <th>User Name</th>
+	                            <th>Email</th>
+	                            <th>Role</th>
+	                            <th width="20%"></th>
+	                        </tr>
+	                    </thead>
+	                    <tbody>
+	                        <tr ng-repeat="u in ctrl.users.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+	                            <td><span ng-bind="u.id"></span></td>
+	                            <td><span ng-bind="u.displayName"></span></td>
+	                            <td><span ng-bind="u.email"></span></td>
+	                            <td><span ng-bind="u.role.roledesc"></span></td>
+	                            <td>
+	                            <button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success btn-sm btn-sm">Edit</button>  
+	                            <button type="button" ng-click="ctrl.remove(u)" class="btn btn-danger btn-sm btn-smh">Remove</button>
+	                            </td>
+	                        </tr>
+	                    </tbody>
+						<tfoot> 
+							<tr> 
+								<td colspan="5">
+								    <uib-pagination 
+								      ng-model="currentPage"
+								      total-items="ctrl.users.length"
+								      items-per-page="itemsPerPage" 
+								      max-size="maxSize"  
+								      boundary-links="true">
+								    </uib-pagination>
+								</td>
+							</tr> 
+						</tfoot>
+	                </table>
+	            </div>
+	        </div>
+	    </div>		
+	</div>
 </div>
+				    

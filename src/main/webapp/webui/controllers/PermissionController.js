@@ -4,6 +4,9 @@ function PermissionController($location, $scope, $rootScope, PermissionService, 
 	var self = this;
     self.permission={id:null,permissionname:'',permissiondesc:''};
 	self.permissions=[];
+	$scope.currentPage = 1;
+	$scope.itemsPerPage = 1;
+   	$scope.maxSize = 5;
 
     self.reset = function(){
     	self.permission={id:null,permissionname:'',permissiondesc:''};
