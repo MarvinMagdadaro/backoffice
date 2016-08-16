@@ -1,8 +1,8 @@
 angular.module('App.Auth')
     .controller('RegisterController', RegisterController);
 
-RegisterController.$inject = ['$location', '$scope', '$rootScope', 'AuthService', 'FlashMessage'];
-function RegisterController($location, $scope, $rootScope, AuthService, FlashMessage) {
+RegisterController.$inject = ['$location', '$scope', '$rootScope', 'AuthService', 'AlertService', 'FlashMessage'];
+function RegisterController($location, $scope, $rootScope, AuthService, AlertService, FlashMessage) {
     var rc = this;
     rc.register = function (admin) {
         $rootScope.isSubmitted = true;
@@ -14,10 +14,11 @@ function RegisterController($location, $scope, $rootScope, AuthService, FlashMes
                 AuthService.setCredentials();
                 $location.path('/app');
             } else {
-                rc.error = response.result;
+                //rc.error = response.result;
                 rc.details = response.details;
                 rc.dataLoading = false;
                 $rootScope.isSubmitted = false;
+                AlertService.add('danger', response.result);
             }
         });
     };

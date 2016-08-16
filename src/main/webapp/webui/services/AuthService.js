@@ -50,6 +50,39 @@ angular.module('App.Auth')
                     });
             };
 
+            service.resetPassword = function (email, callback) {
+                BackendCfg.setupHttp($http);
+
+                $http.post(BackendCfg.url+'/api/user/resetpassword', $.param({'email':email}) , {headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}} )
+                    .then(
+                    	function (response) {
+                    		callback(response);
+                    	},
+                    	function (errResponse) {
+                            callback(errResponse);
+                    	}
+                    );
+            };
+
+            service.changePassword = function (oldpassword, newpassword, callback) {
+                BackendCfg.setupHttp($http);
+                
+                var user = angular.copy($rootScope.globals.currentUser);
+                var aesPack = this.encryptPassword(newpassword);
+                user.password = '';
+                user.vpassword = '';
+                user.iv = aesPack.iv;
+                user.salt = aesPack.salt;
+                user.keySize = aesPack.keySize;
+                user.iterations = aesPack.iterations;
+                user.encryptedPassword = aesPack.ciphertext;
+            	
+                $http.post(BackendCfg.url+'/api/user/changepassword', user )
+                    .then(function (response) {
+                        callback(response);
+                    });
+            };
+
             service.encryptPassword = function (password) {
                 var aesPack = {};
                 var iv = CryptoJS.lib.WordArray.random(128/8).toString(CryptoJS.enc.Hex);

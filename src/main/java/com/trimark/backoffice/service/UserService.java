@@ -71,4 +71,6 @@ public interface UserService extends BaseService<User, Long> {
     public User findByEmail(String email) throws EmailNotFoundException;
     
     public List<User> getUsers(int pageNum, int countPerPage, Order order);
+    
+    public User changeUserPassword(User user) throws EmailNotFoundException;
 }

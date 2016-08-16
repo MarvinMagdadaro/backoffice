@@ -63,9 +63,9 @@
 				<a class="navbar-brand" href="#"><img class="header-logo" src="res/images/trimark_logo_red.png"/></a>
 			</div>
 			<div class="navbar-form navbar-right">
-                <a ng-if="!currentUser" href="#/login">Sign In</a>
-                <a ng-if="currentUser" href="#/app">Hi {{currentUser.displayName}}!</a>
-                <a ng-if="currentUser" ng-controller="AppController as app" ng-click="app.logout()" style="cursor: pointer;"><i class="glyphicon glyphicon-lock"></i>Sign Out</a>
+                <a ng-if="!currentUser" href="#/login" class="btn btn-link">Sign In</a>
+                <a ng-if="currentUser" href="#/app" class="btn btn-link">Hi {{currentUser.displayName}}!</a>
+                <a ng-if="currentUser" ng-controller="AppController as app" ng-click="app.logout()" class="btn btn-link"><i class="glyphicon glyphicon-lock"></i>Sign Out</a>
 			</div>
 		</div>
 	</nav>

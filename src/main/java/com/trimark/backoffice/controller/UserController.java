@@ -7,6 +7,7 @@ import com.trimark.backoffice.auth.AuthenticationFailedException;
 import com.trimark.backoffice.auth.JWTTokenAuthFilter;
 import com.trimark.backoffice.framework.api.APIResponse;
 import com.trimark.backoffice.framework.controller.BaseController;
+import com.trimark.backoffice.model.dto.RoleDTO;
 import com.trimark.backoffice.model.dto.UserDTO;
 import com.trimark.backoffice.model.entity.Role;
 import com.trimark.backoffice.model.entity.User;
@@ -18,6 +19,8 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.math.RandomUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import org.hibernate.criterion.Order;
@@ -44,6 +47,10 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
@@ -136,6 +143,34 @@ public class UserController extends BaseController {
         return APIResponse.toOkResponse(authResp);
     }
 
+    @RequestMapping(value = "/resetpassword", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<Void> resetPassword(@FormParam("email") String email)  {
+
+    	LOG.info("Reset password email: "+email);
+
+        String password = getRandomPassword();
+    	LOG.info("Reset password: "+password);
+        /*
+        User user = userService.findByEmail(email);
+        user.setPassword(password);
+        userService.changeUserPassword(user);
+        */
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(value = "/changepassword", method = RequestMethod.POST, headers = {JSON_API_CONTENT_HEADER})
+    public ResponseEntity<Void> changePassword(@RequestBody UserDTO userDTO) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeySpecException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+
+        LOG.info("Change password email: "+userDTO.getEmail());
+
+        User user = userService.findByEmail(userDTO.getEmail());
+        String password = decryptPassword(userDTO);
+        user.setPassword(password);
+        userService.changeUserPassword(user);
+        
+        return ResponseEntity.ok().build();
+    }
+    
     private void createAuthResponse(User user, HashMap<String, Object> authResp) {
         String token = Jwts.builder().setSubject(user.getEmail())
                 .claim("role", user.getRole().getRolename()).setIssuedAt(new Date())
@@ -158,7 +193,7 @@ public class UserController extends BaseController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }        
         //return APIResponse.toOkResponse("success");
-       return new ResponseEntity<Void>(HttpStatus.OK);
+       return ResponseEntity.ok().build();
     }
 
     //-------------------Retrieve All Users--------------------------------------------------------
@@ -225,6 +260,7 @@ public class UserController extends BaseController {
  
         currentUser.setEmail(user.getEmail());
         currentUser.setDisplayName(user.getDisplayName());
+        currentUser.setRole(mapper.map(user.getRole(), Role.class));
          
         userService.update(currentUser);
         return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
@@ -284,10 +320,15 @@ public class UserController extends BaseController {
         }
     }
 
-    public Role setUserRole() {
+    private Role setUserRole() {
         Role role = new Role();
         role.setId(Long.valueOf(3));
         role.setRolename("ROLE_USER");
+        role.setRoledesc("User");
         return role;
+    }
+    
+    private String getRandomPassword() {
+    	return RandomStringUtils.randomAlphanumeric(8);
     }
 }

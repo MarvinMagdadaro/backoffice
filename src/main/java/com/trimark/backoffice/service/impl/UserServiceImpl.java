@@ -88,4 +88,12 @@ public class UserServiceImpl extends BaseJPAServiceImpl<User, Long> implements U
     	List<User> users = (List<User>) userRepository.findAllByPage(pageNum, countPerPage, order);
         return users;
     }
+
+    @Override
+    public User changeUserPassword(User user) {
+        user.setPassword(User.hashPassword(user.getPassword()));
+        user.setUpdatedAt(new Date());
+
+        return userRepository.update(user);
+    }
 }

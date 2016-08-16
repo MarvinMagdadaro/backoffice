@@ -30,6 +30,12 @@ TGWebModule.config(['$routeProvider', '$locationProvider', '$httpProvider', func
                 controllerAs: 'lc'
             })
 
+            .when('/resetpw', {
+                controller: 'LoginController',
+                templateUrl: 'webui/views/resetpw.html',
+                controllerAs: 'lc'
+            })
+
             .when('/register', {
                 controller: 'RegisterController',
                 templateUrl: 'webui/views/register.html',
@@ -51,6 +57,12 @@ TGWebModule.config(['$routeProvider', '$locationProvider', '$httpProvider', func
             .when('/app', {
                 controller: 'AppController',
                 templateUrl: 'webui/views/dashboard.html',
+                controllerAs: 'app'
+            })
+
+            .when('/changepw', {
+                controller: 'AppController',
+                templateUrl: 'webui/views/changepw.html',
                 controllerAs: 'app'
             })
 
@@ -92,7 +104,7 @@ TGWebModule.run(['$rootScope', '$location', '$cookieStore', '$http',
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             //console.log('received event: ' + event + ' from: ' + current + ' to go to next: ' + next);
             // redirect to login page if not logged in and trying to access a restricted page
-            var restrictedPage = $.inArray($location.path(), ['/login', '/register', '/admin.login', '/adm.register', '/admin']) === -1;
+            var restrictedPage = $.inArray($location.path(), ['/login', '/register', '/admin.login', '/adm.register', '/admin', '/resetpw']) === -1;
             var loggedIn = $rootScope.globals.currentUser;
             $rootScope.currentUser = $rootScope.globals.currentUser;
             if (restrictedPage && !loggedIn) {
