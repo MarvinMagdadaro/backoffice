@@ -3,7 +3,7 @@ package com.trimark.backoffice.framework.api;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.web.servlet.ModelAndView;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class APIResponse {
     public static final String API_RESPONSE = "apiResponse";
     Object result;

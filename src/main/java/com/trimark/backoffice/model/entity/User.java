@@ -173,7 +173,7 @@ public class User extends JPAEntity<Long> implements UserDetails {
                 '}';
     }
 
-    @Transient
+    @JsonIgnore @Transient
     public Set<Permission> getPermissions() {
         Set<Permission> perms = new HashSet<Permission>();
         if (role!=null){
@@ -182,8 +182,7 @@ public class User extends JPAEntity<Long> implements UserDetails {
         return perms;
     }
 
-    @Override
-    @Transient
+    @JsonIgnore @Override @Transient
     public Collection<GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
         authorities.add(getRole());
