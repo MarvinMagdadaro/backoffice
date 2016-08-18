@@ -34,6 +34,11 @@ public class RoleServiceImpl extends BaseJPAServiceImpl<Role, Long> implements R
     }
     
     @Override
+    public Role findByRolename(String rolename) {
+        return roleRepository.findByRolename(rolename);
+    }
+    
+    @Override
     public List<Role> getRoles(int pageNum, int countPerPage, Order order) {
     	List<Role> roles = (List<Role>) roleRepository.findAllByPage(pageNum, countPerPage, order);
         return roles;

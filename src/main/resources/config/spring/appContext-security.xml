@@ -18,8 +18,8 @@
 
         <intercept-url pattern="/*" access="permitAll" />
 		<!-- intercept-url pattern="/api/**" access="isFullyAuthenticated()"/-->
-		<intercept-url pattern="/webui/views/dashboard.html" access="isFullyAuthenticated()"/>
-		<intercept-url pattern="/webui/views/changepw.html" access="isFullyAuthenticated()"/>
+		<intercept-url pattern="/webui/views/dashboard.html" access="permitAll"/>
+		<intercept-url pattern="/webui/views/changepw.html" access="isAuthenticated()"/>
 		<intercept-url pattern="/webui/views/user.html" access="hasAnyAuthority('ROLE_ADMIN')"/>
 		<intercept-url pattern="/webui/views/role.html" access="hasAnyAuthority('ROLE_ADMIN')"/>
 		<intercept-url pattern="/webui/views/permission.html" access="hasAnyAuthority('ROLE_ADMIN')"/>
@@ -28,10 +28,6 @@
         <intercept-url pattern="../../../webapp/webui/views/common/footer.html" access="permitAll" />
         <intercept-url pattern="../../../webapp/res/css/app.css" access="permitAll" />
         <intercept-url pattern="../../../webapp/res/js/angular-cookies/angular-cookies.js" access="permitAll" />
-
-        <intercept-url pattern="/dashboard" access="hasRole('ROLE_USER')" />
-        <intercept-url pattern="../admin" access="hasRole('ROLE_ADMIN')" />
-        <intercept-url pattern="../../../resources/config/spring/appContext-service.xml" access="isAuthenticated" />
 
         <!-- CSRF Token Config -->
         <!-- 

@@ -7,11 +7,11 @@ import com.trimark.backoffice.auth.AuthenticationFailedException;
 import com.trimark.backoffice.auth.JWTTokenAuthFilter;
 import com.trimark.backoffice.framework.api.APIResponse;
 import com.trimark.backoffice.framework.controller.BaseController;
-import com.trimark.backoffice.model.dto.RoleDTO;
 import com.trimark.backoffice.model.dto.UserDTO;
 import com.trimark.backoffice.model.entity.Role;
 import com.trimark.backoffice.model.entity.User;
 import com.trimark.backoffice.service.MailJobService;
+import com.trimark.backoffice.service.RoleService;
 import com.trimark.backoffice.service.UserDetailsService;
 import com.trimark.backoffice.service.UserService;
 import org.apache.commons.codec.DecoderException;
@@ -19,7 +19,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
@@ -48,9 +47,6 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
@@ -75,6 +71,7 @@ public class UserController extends BaseController {
 
     private @Autowired UserService userService;
     private @Autowired UserDetailsService userDetailsService;
+    private @Autowired RoleService roleService;
     private @Autowired MailJobService mailJobService;
 
     /**
@@ -114,10 +111,11 @@ public class UserController extends BaseController {
      *
      * @param userDTO
      * @return
+	 * @throws Exception 
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST, headers = {JSON_API_CONTENT_HEADER})
     public @ResponseBody APIResponse register(@RequestBody UserDTO userDTO,
-                                              HttpServletRequest request) throws NoSuchPaddingException, UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeySpecException {
+                                              HttpServletRequest request) throws Exception {
         Validate.isTrue(StringUtils.isNotBlank(userDTO.getEmail()), "Email is blank");
         Validate.isTrue(StringUtils.isNotBlank(userDTO.getEncryptedPassword()), "Encrypted password is blank");
         Validate.isTrue(StringUtils.isNotBlank(userDTO.getDisplayName()), "Display name is blank");
@@ -134,7 +132,7 @@ public class UserController extends BaseController {
         user.setDisplayName(userDTO.getDisplayName());
         user.setPassword(password);
         user.setEnabled(true);
-        user.setRole(setUserRole());
+        user.setRole(getUserRole());
         userService.registerUser(user, request);
 
         HashMap<String, Object> authResp = new HashMap<>();
@@ -238,7 +236,7 @@ public class UserController extends BaseController {
         user.setDisplayName(userDTO.getDisplayName());
         user.setPassword(password);
         user.setEnabled(true);
-        user.setRole(setUserRole());
+        user.setRole(getUserRole());
         userService.insert(user);
  
         HttpHeaders headers = new HttpHeaders();
@@ -320,11 +318,14 @@ public class UserController extends BaseController {
         }
     }
 
-    private Role setUserRole() {
-        Role role = new Role();
-        role.setId(Long.valueOf(3));
-        role.setRolename("ROLE_USER");
-        role.setRoledesc("User");
+    private Role getUserRole() throws Exception {
+    	Role role = roleService.findByRolename("ROLE_USER");
+    	if (role==null) {
+	        role = new Role();
+	        role.setRolename("ROLE_USER");
+	        role.setRoledesc("User");
+	        roleService.insert(role);
+    	}
         return role;
     }
     

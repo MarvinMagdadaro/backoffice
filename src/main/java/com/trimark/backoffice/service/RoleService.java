@@ -9,6 +9,7 @@ import com.trimark.backoffice.model.entity.Role;
 public interface RoleService extends BaseService<Role, Long> {
 
     public boolean isRolePresent(String rolename);
+    public Role findByRolename(String rolename);
     public List<Role> getRoles(int pageNum, int countPerPage, Order order);
 
 }
