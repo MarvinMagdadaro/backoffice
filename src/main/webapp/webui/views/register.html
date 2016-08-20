@@ -3,7 +3,7 @@
 	    <div class="col-sm-3 col-sm-offset-2" ng-controller="RegisterController as rc">
 	        <h2>Register</h2>
 	        <div ng-show="rc.error" class="alert alert-danger">{{rc.error}}</div>
-	        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()" dismiss-on-timeout="10000">{{ alert.msg }}</uib-alert>
+	        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()" dismiss-on-timeout="30000">{{ alert.msg }}</uib-alert>
 	        <form name="form" ng-submit="rc.register(false)" role="form">
 	            <fieldset ng-disabled="isSubmitted">
 	            <div class="form-group" ng-class="{ 'has-error': form.displayName.$dirty && (form.displayName.$error.required || form.displayName.$error.maxlength) }">

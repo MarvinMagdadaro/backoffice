@@ -39,7 +39,7 @@ public class PermissionController extends BaseController {
     
     @RequestMapping(value = "/list/", method = RequestMethod.GET)
     public ResponseEntity<List<PermissionDTO>> listAllPermissions() throws Exception {
-        List<Permission> permissions = (List<Permission>) permissionService.getPermissions(0, 10, Order.asc("permissionname"));
+        List<Permission> permissions = (List<Permission>) permissionService.getPermissions(1, 1000, Order.asc("permissionname"));
         if(permissions.isEmpty()){
             return new ResponseEntity<List<PermissionDTO>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
         }
@@ -81,6 +81,9 @@ public class PermissionController extends BaseController {
         Permission nPermission = new Permission();
         nPermission.setPermissionname(permission.getPermissionname());
         nPermission.setPermissiondesc(permission.getPermissiondesc());
+        nPermission.setGroup(permission.getGroup());
+        nPermission.setCategory(permission.getCategory());
+        nPermission.setRights(permission.getRights());
         permissionService.insert(nPermission);
  
         HttpHeaders headers = new HttpHeaders();
@@ -105,6 +108,9 @@ public class PermissionController extends BaseController {
  
         currentPermission.setPermissionname(permission.getPermissionname());
         currentPermission.setPermissiondesc(permission.getPermissiondesc());
+        currentPermission.setGroup(permission.getGroup());
+        currentPermission.setCategory(permission.getCategory());
+        currentPermission.setRights(permission.getRights());
          
         permissionService.update(currentPermission);
         return new ResponseEntity<PermissionDTO>(permission, HttpStatus.OK);

@@ -3,7 +3,7 @@
 	    <div class="col-sm-3 col-sm-offset-2" ng-controller="LoginController as lc">
 	        <h2>Login</h2>
 	        <div ng-show="lc.error" class="alert alert-danger">{{lc.error}}</div>
-	        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()" dismiss-on-timeout="10000">{{ alert.msg }}</uib-alert>
+	        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()" dismiss-on-timeout="30000">{{ alert.msg }}</uib-alert>
 	        <form name="form" ng-submit="lc.login()" role="form">
 	            <fieldset ng-disabled="isSubmitted">
 	            <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && (form.email.$error.required || form.email.$error.email) }">

@@ -2,14 +2,33 @@ angular.module('App')
     .controller('PermissionController', ['$location', '$scope', '$rootScope', 'PermissionService', 'ModalService', 'AlertService', 'FlashMessage',   
 function PermissionController($location, $scope, $rootScope, PermissionService, ModalService, AlertService, FlashMessage) {
 	var self = this;
-    self.permission={id:null,permissionname:'',permissiondesc:''};
+	self.groups=[{'groupname':'System and Security'},
+	             {'groupname':'Brands'},
+	             {'groupname':'Scratchcards'}];
+	self.categories=[{'groupname':'System and Security','catname':'User Management'},
+	                 {'groupname':'System and Security','catname':'Role Management'},
+	                 {'groupname':'System and Security','catname':'Permission Management'},
+	                 {'groupname':'Brands','catname':'Brand A'},
+	                 {'groupname':'Brands','catname':'Brand B'},
+	                 {'groupname':'Brands','catname':'Brand C'},
+	                 {'groupname':'Brands','catname':'Brand D'},
+	                 {'groupname':'Brands','catname':'Brand E'},
+	                 {'groupname':'Scratchcards','catname':'Model'},
+	                 {'groupname':'Scratchcards','catname':'Lottery'},
+	                 {'groupname':'Scratchcards','catname':'Stream'},
+	                 {'groupname':'Scratchcards','catname':'Batch'}];
+	self.rightslist=[{'rightsname':'Read'},
+	                 {'rightsname':'Create'},
+	                 {'rightsname':'Update'},
+	                 {'rightsname':'Delete'}];
+    self.permission={id:null,permissionname:'',permissiondesc:'',group:'',category:'',rights:''};
 	self.permissions=[];
 	$scope.currentPage = 1;
-	$scope.itemsPerPage = 1;
+	$scope.itemsPerPage = 10;
    	$scope.maxSize = 5;
 
     self.reset = function(){
-    	self.permission={id:null,permissionname:'',permissiondesc:''};
+        self.permission={id:null,permissionname:'',permissiondesc:'',group:'',category:'',rights:''};
         $scope.myForm.$setPristine(); //reset Form
     };
     
@@ -42,7 +61,11 @@ function PermissionController($location, $scope, $rootScope, PermissionService, 
             		  AlertService.add('success', 'Permission added successfully.');
 	              },	
 	              function(errResponse){
-		               AlertService.add('danger', 'Error while adding Permission.');
+	            	  if (errResponse.status==409){
+	            		  AlertService.add('danger', 'Permission Name '+ permission.permissionname +' already exists.');
+	            	  } else{
+	            		  AlertService.add('danger', 'Error while adding Permission.');
+	            	  }
 	              }	
             );
         });
@@ -108,7 +131,7 @@ function PermissionController($location, $scope, $rootScope, PermissionService, 
         for(var i = 0; i < self.permissions.length; i++){
             if(self.permissions[i].id == id) {
                 self.permission = angular.copy(self.permissions[i]);
-               break;
+                break;
             }
         }
     };

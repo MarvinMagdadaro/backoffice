@@ -5,13 +5,13 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
     self.user={id:null,displayName:'',email:'',role:[{id:null,rolename:'',roledesc:''}]};
 	self.users=[];
 	$scope.currentPage = 1;
-	$scope.itemsPerPage = 1;
+	$scope.itemsPerPage = 10;
    	$scope.maxSize = 5;
 
     self.reset = function(){
     	//self.user={id:null,displayName:'',email:''};
         self.user={id:null,displayName:'',email:'',role:[{id:null,rolename:'',roledesc:''}]};
-        $scope.myForm.$setPristine(); //reset Form
+        if ($scope.myForm) $scope.myForm.$setPristine(); //reset Form
     };
     
     self.fetchAllUsers = function(){
@@ -43,7 +43,11 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
             		  AlertService.add('success', 'User added successfully.');
 	              },	
 	              function(errResponse){
-		               AlertService.add('danger', 'Error while adding User.');
+	            	  if (errResponse.status==409){
+	            		  AlertService.add('danger', 'User email '+ user.email +' already exists.');
+	            	  } else{
+	    				  AlertService.add('danger', 'Error while adding User.');
+	            	  }
 	              }	
             );
         });

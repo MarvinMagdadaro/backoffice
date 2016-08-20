@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.trimark.backoffice.framework.controller.BaseController;
+import com.trimark.backoffice.model.dto.PermissionDTO;
 import com.trimark.backoffice.model.dto.RoleDTO;
+import com.trimark.backoffice.model.entity.Permission;
 import com.trimark.backoffice.model.entity.Role;
 import com.trimark.backoffice.service.RoleService;
 
@@ -39,7 +41,7 @@ public class RoleController extends BaseController {
     
     @RequestMapping(value = "/list/", method = RequestMethod.GET)
     public ResponseEntity<List<RoleDTO>> listAllRoles() throws Exception {
-        List<Role> roles = (List<Role>) roleService.getRoles(0, 10, Order.asc("rolename"));
+        List<Role> roles = (List<Role>) roleService.getRoles(1, 1000, Order.asc("rolename"));
         if(roles.isEmpty()){
             return new ResponseEntity<List<RoleDTO>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
         }
@@ -82,6 +84,15 @@ public class RoleController extends BaseController {
         Role nRole = new Role();
         nRole.setRolename(role.getRolename());
         nRole.setRoledesc(role.getRoledesc());
+        
+        if (role.getPermissions()!=null && !role.getPermissions().isEmpty()){
+        	List<Permission> permissionList = new ArrayList<Permission>();
+        	for (PermissionDTO permission: role.getPermissions()){
+        		permissionList.add(mapper.map(permission, Permission.class));
+        	}
+        	nRole.setPermissions(permissionList);
+        }
+         
         roleService.insert(nRole);
  
         HttpHeaders headers = new HttpHeaders();
@@ -106,6 +117,14 @@ public class RoleController extends BaseController {
  
         currentRole.setRolename(role.getRolename());
         currentRole.setRoledesc(role.getRoledesc());
+        
+        if (role.getPermissions()!=null && !role.getPermissions().isEmpty()){
+        	List<Permission> permissionList = new ArrayList<Permission>();
+        	for (PermissionDTO permission: role.getPermissions()){
+        		permissionList.add(mapper.map(permission, Permission.class));
+        	}
+        	currentRole.setPermissions(permissionList);
+        }
          
         roleService.update(currentRole);
         return new ResponseEntity<RoleDTO>(role, HttpStatus.OK);

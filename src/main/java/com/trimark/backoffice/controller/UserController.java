@@ -196,9 +196,9 @@ public class UserController extends BaseController {
 
     //-------------------Retrieve All Users--------------------------------------------------------
     @RequestMapping(value = "/list/", method = RequestMethod.GET)
-    @PreAuthorize("hasAnyAuthority('CTRL_USER_LIST')")
+    //@PreAuthorize("hasAnyAuthority('CTRL_USER_READ')")
     public ResponseEntity<List<UserDTO>> listAllUsers(HttpServletRequest request) throws Exception {
-        List<User> users = (List<User>) userService.getUsers(0, 10, Order.asc("displayName"));
+        List<User> users = (List<User>) userService.getUsers(1, 1000, Order.asc("displayName"));
         if(users.isEmpty()){
             return new ResponseEntity<List<UserDTO>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
         }
@@ -227,7 +227,7 @@ public class UserController extends BaseController {
     	String password = decryptPassword(userDTO);
     	
         if (userService.isEmailExists(userDTO.getEmail())) {
-        	LOG.info("A User with name " + userDTO.getEmail() + " already exist");
+        	LOG.info("A User with email " + userDTO.getEmail() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
  

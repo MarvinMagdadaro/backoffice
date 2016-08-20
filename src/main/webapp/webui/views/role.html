@@ -4,47 +4,132 @@
 	        <div class="panel panel-default">
 	            <div class="panel-heading">Role Form</div>
 				<div class="panel-body">
-					<div class="col-sm-10">
-	                <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
-						<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()" dismiss-on-timeout="10000">{{ alert.msg }}</uib-alert>
-	                    <input type="hidden" ng-model="ctrl.role.id" />
-	                    <div class="row">
-	                        <div class="form-group" ng-class="{ 'has-error': myForm.name.$dirty && (myForm.name.$error.required || myForm.name.$error.maxlength)}">
-	                            <label class="col-sm-2 control-lable" for="name">Role Name</label>
-	                            <div class="col-sm-5">
-	                                <input type="text" ng-model="ctrl.role.rolename" name="name" ng-maxlength="50" class="form-control input-sm" placeholder="Enter Role Name" required/>
-	                                <span ng-show="myForm.name.$dirty && myForm.name.$error.required" class="help-block">Role Name is a required field</span>
-	                                <span ng-show="myForm.name.$dirty && myForm.name.$error.maxlength" class="help-block">Role Name is too long</span>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="form-group" ng-class="{ 'has-error': myForm.desc.$dirty && (myForm.desc.$error.required || myForm.desc.$error.maxlength)}">
-	                            <label class="col-sm-2 control-lable" for="desc">Role Description</label>
-	                            <div class="col-sm-5">
-	                                <input type="text" ng-model="ctrl.role.roledesc" name="desc" ng-maxlength="255" class="form-control input-sm" placeholder="Enter Role Description" required/>
-	                                <span ng-show="myForm.desc.$dirty && myForm.desc.$error.required" class="help-block">Role Description is a required field</span>
-	                                <span ng-show="myForm.desc.$dirty && myForm.desc.$error.maxlength" class="help-block">Role Description is too long</span>
-	                            </div>
-	                        </div>
-	                    </div>
-	                      
-	                    <div class="row">
-							<div class="form-group" >
-								<div class="col-sm-offset-2 col-sm-7">
-									<div ng-if="!ctrl.role.id">
-			                            <input type="submit"  value="Add" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
-			                            <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset</button>
+	                <form ng-submit="ctrl.submit()" name="myForm">
+					<div class="form-horizontal">
+						<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()" dismiss-on-timeout="30000">{{ alert.msg }}</uib-alert>
+	                    <input type="hidden" ng-model="role.id" />
+                        <div class="form-group" ng-class="{ 'has-error': myForm.name.$dirty && (myForm.name.$error.required || myForm.name.$error.maxlength)}">
+                            <label class="col-sm-2 control-lable" for="name">Role Name</label>
+                            <div class="col-sm-5">
+                                <input type="text" ng-model="role.rolename" name="name" ng-maxlength="50" class="form-control input-sm" placeholder="Enter Role Name" required/>
+                                <span ng-show="myForm.name.$dirty && myForm.name.$error.required" class="help-block">Role Name is a required field</span>
+                                <span ng-show="myForm.name.$dirty && myForm.name.$error.maxlength" class="help-block">Role Name is too long</span>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': myForm.desc.$dirty && (myForm.desc.$error.required || myForm.desc.$error.maxlength)}">
+                            <label class="col-sm-2 control-lable" for="desc">Role Description</label>
+                            <div class="col-sm-5">
+                                <input type="text" ng-model="role.roledesc" name="desc" ng-maxlength="255" class="form-control input-sm" placeholder="Enter Role Description" required/>
+                                <span ng-show="myForm.desc.$dirty && myForm.desc.$error.required" class="help-block">Role Description is a required field</span>
+                                <span ng-show="myForm.desc.$dirty && myForm.desc.$error.maxlength" class="help-block">Role Description is too long</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-lable" for="desc">Permissions</label>
+                        </div>
+<!--                         
+                        <div class="form-group">
+                            <div class="col-sm-12" ng-controller="PermissionController as pctrl">
+							  <table class="table table-bordered">
+							    <thead>
+							      <tr>
+							        <th>Select</th>
+							        <th>Group</th>
+							        <th>Category</th>
+							        <th>Rights</th>
+							      </tr>
+							    </thead>
+							    
+							    <tbody ng-repeat="permission in pctrl.permissions">
+							      <tr>
+							        <td><input type="checkbox" ng-checked="ctrl.checkItem(permission.id)" ng-change="toggleItem()" ng-model="permission.selected"></td>
+							        <td>{{ permission.group }}</td>
+							        <td>{{ permission.category }}</td>
+							        <td>{{ permission.rights }}</td>
+							      </tr>
+							    </tbody>
+							  </table>    
+   	                        </div>
+                        </div>
+						  <div class="debug">
+						    <h2>debug</h2>
+						    <br/>
+						    <b>{{role.permissions}}</b>
+						  </div>	                      
+ -->
+						<div class="row" ng-controller="PermissionController as pctrl">
+							<div class="col-lg-12" ng-repeat="(groupname, gp) in pctrl.permissions | orderBy: 'group' | groupBy: 'group'">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										{{groupname}}
 									</div>
-									<div ng-if="ctrl.role.id">
-			                            <input type="submit"  value="Update" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
-			                            <button type="button" ng-click="ctrl.cancel()" class="btn btn-warning btn-sm" >Cancel</button>
+									<div class="panel-body">
+										<div class="form-horizontal">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">{{groupname}}</label>
+												<div class="col-sm-10" ng-if="groupname=='Brands'">
+													<table class="table table-bordered">
+												        <colgroup>
+															<col class="col-sm-1">
+															<col class="col-sm-9">
+												        </colgroup>
+														<thead> 
+															<tr> 
+																<th></th>
+																<th>Brand Name</th>
+															</tr> 
+														</thead>
+														<tbody class="table table-bordered" ng-repeat="(catname, cp) in gp | orderBy: 'category' | groupBy: 'category'">
+														      <tr ng-repeat="permission in cp | orderBy:'rights'">
+														        <td><input type="checkbox" ng-checked="ctrl.checkItem(permission.id)" ng-change="toggleItem()" ng-model="permission.selected"></td>
+														        <td>{{ permission.category }}</td>
+														      </tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="col-sm-10" ng-if="groupname!='Brands'">
+													<table class="table table-bordered">
+												        <colgroup>
+															<col class="col-sm-1">
+															<col class="col-sm-7">
+															<col class="col-sm-2">
+												        </colgroup>
+														<thead> 
+															<tr> 
+																<th></th>
+																<th>Category</th>
+																<th>Rights</th>
+															</tr> 
+														</thead>
+														<tbody class="table table-bordered" ng-repeat="(catname, cp) in gp | orderBy: 'category' | groupBy: 'category'">
+														      <tr ng-repeat="permission in cp | orderBy:'rights'">
+														        <td><input type="checkbox" ng-checked="ctrl.checkItem(permission.id)" ng-change="toggleItem()" ng-model="permission.selected"></td>
+														        <td>{{ permission.category }}</td>
+														        <td>{{ permission.rights }}</td>
+														      </tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
 									</div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </form>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" >
+							<div class="col-sm-offset-2 col-sm-7">
+								<div ng-if="!role.id">
+		                            <input type="submit"  value="Add" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
+		                            <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset</button>
+								</div>
+								<div ng-if="role.id">
+		                            <input type="submit"  value="Update" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
+		                            <button type="button" ng-click="ctrl.cancel()" class="btn btn-warning btn-sm" >Cancel</button>
+								</div>
+                            </div>
+                        </div>
                     </div>
+	                </form>
 	            </div>
 	        </div>    
 	     </div>    
@@ -55,12 +140,18 @@
 	            <div class="panel-heading">List of Roles</div>
 				<div class="panel-body">
 	                <table class="table table-bordered">
+				        <colgroup>
+							<col class="col-sm-1">
+							<col class="col-sm-4">
+							<col class="col-sm-5">
+							<col class="col-sm-2">
+				        </colgroup>
 	                    <thead>
 	                        <tr>
 	                            <th>ID</th>
 	                            <th>Role Name</th>
 	                            <th>Role Description</th>
-	                            <th width="20%"></th>
+	                            <th></th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
