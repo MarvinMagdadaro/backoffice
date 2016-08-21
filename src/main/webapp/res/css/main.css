@@ -37,13 +37,13 @@ body {
 	width: 250px;
 }
 
-#page-content-wrapper {
+#main-panel {
 	width: 100%;
-	position: absolute;
+/*	position: absolute;*/
 	padding: 15px;
 }
 
-#wrapper.toggled #page-content-wrapper {
+#wrapper.toggled #main-panel {
 	position: absolute;
 	margin-right: -250px;
 }
@@ -116,10 +116,6 @@ body {
 	background: none;
 }
 
-.menu-toggle {
-	padding-left: 0;
-}
-
 /* END SIDE PANEL */
 
 
@@ -176,20 +172,16 @@ body {
 		width: 0;
 	}
 
-	#page-content-wrapper {
-		padding: 20px;
-		position: relative;
+	#main-panel {
+        padding: 20px;
+/*		position: relative;*/
 	}
 
-	#wrapper.toggled #page-content-wrapper {
+	#wrapper.toggled #main-panel {
 		position: relative;
-		margin-right: 0;
+		margin-right: 0px;
 	}
 
-	.menu-toggle {
-		display: block;
-		visibility: visible;
-	}
 }
 
 /* END - MEDIA QUERIES */

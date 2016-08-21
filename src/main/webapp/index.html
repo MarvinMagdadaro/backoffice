@@ -53,32 +53,35 @@
     <script src="webui/TGWeb.js"></script>
 </head>
 <body class="ng-cloak" ng-controller="BodyController">
-	<nav class="navbar navbar-inverse navbar-fixed-top nav-bar-main">
+	<nav class="navbar navbar-inverse navbar-fixed-top nav-bar-main" role="navigation">
 		<div class="container-fluid">
-			<div class="navbar-form navbar-left menu-toggle hide">
-				<button type="button" class="btn btn-default">
-					<span class="glyphicon glyphicon-menu-hamburger"></span>
-				</button>
-			</div>
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#"><img class="header-logo" src="res/images/trimark_logo_red.png"/></a>
+	            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	            </button>
+	            <a ng-show="currentUser" class="navbar-brand" href="#menu-toggle" id="menu-toggle"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></a>
+	            <a href="#"><img class="header-logo" src="res/images/trimark_logo_red.png"/></a>
 			</div>
-			<div class="navbar-form navbar-right">
-                <ul class="nav navbar-nav">
-                    <li ng-if="!currentUser" ><a href="#/login"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>
-                    <li ng-if="currentUser" ><a href="#/app"><i class="glyphicon glyphicon-user"></i> {{currentUser.displayName}}</a></li>
-                    <li ng-if="currentUser" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> <b class="caret"></b></a>
+			<div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right"">
+                    <li ng-if="!currentUser" ><a href="#/login"><i class="glyphicon glyphicon-log-in"></i> Log In</a></li>
+                    <li ng-if="currentUser" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i><b class="caret"></b> {{currentUser.displayName}} </a>
                         <ul class="dropdown-menu">
-                            <li><a ng-controller="AppController as app" ng-click="app.logout()" ><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+                            <li><a href="#/app"><i class="glyphicon glyphicon-dashboard"></i> Dashboard</a></a></li>
                             <li><a href="#/changepw"><i class="glyphicon glyphicon-edit"></i> Change Password</a></a></li>
                         </ul>
                     </li>
+                    <li ng-if="currentUser" ><a ng-controller="AppController as app" ng-click="app.logout()" style="cursor: pointer;"><i class="glyphicon glyphicon-log-out"></i> Log Out</a></li>
                 </ul>
 			</div>
 		</div>
 	</nav>
 
 	<div id="wrapper" class="{{currentUser?'':'toggled'}}">
+    <div class="container-fluid">
 		<div id="left-panel">
 			<div class="panel panel-default main-nav-panel" ng-show="currentUser">
 				<div class="panel-heading">
@@ -167,15 +170,16 @@
 		<!-- /#main-panel -->
 
 	</div>
+	</div>
 	<!-- /#wrapper -->
 
 	<script>
 		$(function() {
-			$('#home, .menu-toggle').click(function(e)
+			$('#home, #menu-toggle').click(function(e)
 			{
 				e.preventDefault();
 				$('#wrapper').toggleClass('toggled');
-				$('.menu-toggle').toggleClass('hide');
+				//$('.menu-toggle').toggleClass('hide');
 				
 			});
 

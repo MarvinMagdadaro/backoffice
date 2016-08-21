@@ -18,7 +18,7 @@
 
         <intercept-url pattern="/*" access="permitAll" />
 		<!-- intercept-url pattern="/api/**" access="isFullyAuthenticated()"/-->
-		<intercept-url pattern="/webui/views/dashboard.html" access="permitAll"/>
+		<intercept-url pattern="/webui/views/dashboard.html" access="isAuthenticated()"/>
 		<intercept-url pattern="/webui/views/changepw.html" access="isAuthenticated()"/>
 		<intercept-url pattern="/webui/views/user.html" access="hasAnyAuthority('ROLE_ADMIN')"/>
 		<intercept-url pattern="/webui/views/role.html" access="hasAnyAuthority('ROLE_ADMIN')"/>

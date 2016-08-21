@@ -13,7 +13,7 @@ function AppController($location, $scope, $rootScope, AuthService, AlertService,
     };
 
     app.changepw = function () {
-        AuthService.changePassword($scope.oldpassword, $scope.newpassword, function (response) {
+        AuthService.changePassword($scope.newpassword, function (response) {
             if (response.status==200) {
                 AuthService.clearCredentials();
                 $location.path('/login');

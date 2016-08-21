@@ -64,7 +64,7 @@ angular.module('App.Auth')
                     );
             };
 
-            service.changePassword = function (oldpassword, newpassword, callback) {
+            service.changePassword = function (newpassword, callback) {
                 BackendCfg.setupHttp($http);
                 
                 var user = angular.copy($rootScope.globals.currentUser);
