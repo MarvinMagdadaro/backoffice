@@ -65,6 +65,11 @@ body {
     bottom: 50px;
 }
 
+.navbar .navbar-nav > li.open > a:hover,
+.navbar .navbar-nav > li.open > a:focus {
+  background-color: #e2e2e2;
+}
+
 .side-nav {
 	margin: 0;
 	padding: 0;

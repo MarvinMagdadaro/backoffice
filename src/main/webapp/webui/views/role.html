@@ -8,17 +8,18 @@
 					<div class="form-horizontal">
 						<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()" dismiss-on-timeout="30000">{{ alert.msg }}</uib-alert>
 	                    <input type="hidden" ng-model="role.id" />
-                        <div class="form-group" ng-class="{ 'has-error': myForm.name.$dirty && (myForm.name.$error.required || myForm.name.$error.maxlength)}">
+                        <div class="form-group" ng-class="{ 'has-error': myForm.name.$dirty && (myForm.name.$error.required || myForm.name.$error.maxlength || myForm.name.$error.pattern)}">
                             <label class="col-sm-2 control-lable" for="name">Role Name</label>
-                            <div class="col-sm-5">
-                                <input type="text" ng-model="role.rolename" name="name" ng-maxlength="50" class="form-control input-sm" placeholder="Enter Role Name" required/>
+                            <div class="col-sm-4">
+                                <input type="text" ng-model="role.rolename" name="name" ng-maxlength="50" class="form-control input-sm" placeholder="Enter Role Name" ng-pattern="VALID_PATTERN" required/>
                                 <span ng-show="myForm.name.$dirty && myForm.name.$error.required" class="help-block">Role Name is a required field</span>
                                 <span ng-show="myForm.name.$dirty && myForm.name.$error.maxlength" class="help-block">Role Name is too long</span>
+                                <span ng-show="myForm.name.$dirty && myForm.name.$error.pattern" class="help-block">Role Name must be capital letters and underscore only</span>
                             </div>
                         </div>
                         <div class="form-group" ng-class="{ 'has-error': myForm.desc.$dirty && (myForm.desc.$error.required || myForm.desc.$error.maxlength)}">
                             <label class="col-sm-2 control-lable" for="desc">Role Description</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <input type="text" ng-model="role.roledesc" name="desc" ng-maxlength="255" class="form-control input-sm" placeholder="Enter Role Description" required/>
                                 <span ng-show="myForm.desc.$dirty && myForm.desc.$error.required" class="help-block">Role Description is a required field</span>
                                 <span ng-show="myForm.desc.$dirty && myForm.desc.$error.maxlength" class="help-block">Role Description is too long</span>
@@ -117,7 +118,7 @@
 							</div>
 						</div>
 						<div class="form-group" >
-							<div class="col-sm-offset-2 col-sm-7">
+							<div class="col-sm-offset-2 col-sm-10">
 								<div ng-if="!role.id">
 		                            <input type="submit"  value="Add" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
 		                            <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset</button>

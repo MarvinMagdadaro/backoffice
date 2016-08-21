@@ -8,17 +8,18 @@
 					<div class="form-horizontal">
 						<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()" dismiss-on-timeout="30000">{{ alert.msg }}</uib-alert>
 	                    <input type="hidden" ng-model="ctrl.permission.id" />
-                        <div class="form-group" ng-class="{ 'has-error': myForm.name.$dirty && (myForm.name.$error.required || myForm.name.$error.maxlength)}">
+                        <div class="form-group" ng-class="{ 'has-error': myForm.name.$dirty && (myForm.name.$error.required || myForm.name.$error.maxlength || myForm.name.$error.pattern)}">
                             <label class="col-sm-2 control-lable" for="name">Permission Name</label>
-                            <div class="col-sm-5">
-                                <input type="text" ng-model="ctrl.permission.permissionname" name="name" ng-maxlength="50" class="form-control input-sm" placeholder="Enter Permission Name" required/>
+                            <div class="col-sm-4">
+                                <input type="text" ng-model="ctrl.permission.permissionname" name="name" ng-maxlength="50" class="form-control input-sm" placeholder="Enter Permission Name" ng-pattern="VALID_PATTERN" required/>
                                 <span ng-show="myForm.name.$dirty && myForm.name.$error.required" class="help-block">Permission Name is a required field</span>
                                 <span ng-show="myForm.name.$dirty && myForm.name.$error.maxlength" class="help-block">Permission Name is too long</span>
+                                <span ng-show="myForm.name.$dirty && myForm.name.$error.pattern" class="help-block">Permission Name must be capital letters and underscore only</span>
                             </div>
                         </div>
                         <div class="form-group" ng-class="{ 'has-error': myForm.desc.$dirty && (myForm.desc.$error.required || myForm.desc.$error.maxlength)}">
                             <label class="col-sm-2 control-lable" for="desc">Description</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <input type="text" ng-model="ctrl.permission.permissiondesc" name="desc" ng-maxlength="255" class="form-control input-sm" placeholder="Enter Permission Description" required/>
                                 <span ng-show="myForm.desc.$dirty && myForm.desc.$error.required" class="help-block">Permission Description is a required field</span>
                                 <span ng-show="myForm.desc.$dirty && myForm.desc.$error.maxlength" class="help-block">Permission Description is too long</span>
@@ -26,7 +27,7 @@
                         </div>
                         <div class="form-group" ng-class="{ 'has-error': myForm.group.$dirty && myForm.group.$error.required}">
                             <label class="col-sm-2 control-lable" for="group">Group</label>
-							<div class="col-sm-5">
+							<div class="col-sm-4">
 								<select name="group" class="form-control input-sm" required
 						              ng-model="ctrl.permission.group"
 						              ng-options="group.groupname as group.groupname for group in ctrl.groups">
@@ -37,7 +38,7 @@
                         </div>
                         <div class="form-group" ng-class="{ 'has-error': myForm.category.$dirty && myForm.category.$error.required}">
                             <label class="col-sm-2 control-lable" for="category">Category</label>
-							<div class="col-sm-5">
+							<div class="col-sm-4">
 								<select name="category" class="form-control input-sm" required
 						              ng-model="ctrl.permission.category" ng-disabled="!ctrl.permission.group"
 						              ng-options="category.catname as category.catname for category in ctrl.categories | filter:{groupname: ctrl.permission.group}">
@@ -48,7 +49,7 @@
                         </div>
                         <div class="form-group" ng-class="{ 'has-error': myForm.rights.$dirty && myForm.rights.$error.required}">
                             <label class="col-sm-2 control-lable" for="rights">Rights</label>
-							<div class="col-sm-5">
+							<div class="col-sm-4">
 								<select name="rights" class="form-control input-sm"
 						              ng-model="ctrl.permission.rights" ng-disabled="!ctrl.permission.category"
 						              ng-options="rights.rightsname as rights.rightsname for rights in ctrl.rightslist">
@@ -58,7 +59,7 @@
 							</div>                    
                         </div>
 						<div class="form-group" >
-							<div class="col-sm-offset-2 col-sm-7">
+							<div class="col-sm-offset-2 col-sm-10">
 								<div ng-if="!ctrl.permission.id">
 					                <input type="submit"  value="Add" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
 					                <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset</button>

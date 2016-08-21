@@ -9,7 +9,7 @@
 	                    <input type="hidden" ng-model="ctrl.user.id" />
                         <div class="form-group" ng-class="{ 'has-error': myForm.name.$dirty && (myForm.name.$error.required || myForm.name.$error.maxlength)}">
                             <label class="col-sm-2 control-lable" for="name">User Name</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <input type="text" ng-model="ctrl.user.displayName" name="name" ng-maxlength="255" class="form-control input-sm" placeholder="Enter User Name" required/>
                                 <span ng-show="myForm.name.$dirty && myForm.name.$error.required" class="help-block">User Name is a required field</span>
                                 <span ng-show="myForm.name.$dirty && myForm.name.$error.maxlength" class="help-block">User Name is too long</span>
@@ -17,7 +17,7 @@
                         </div>
                         <div class="form-group" ng-class="{ 'has-error': myForm.email.$dirty && (myForm.email.$error.required || myForm.email.$error.maxlength || myForm.email.$error.email)}">
                             <label class="col-sm-2 control-lable" for="email">Email</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <input type="email" ng-model="ctrl.user.email" name="email" ng-maxlength="255" class="form-control input-sm" placeholder="Enter Email" required/>
                                 <span ng-show="myForm.email.$dirty && myForm.email.$error.required">Email is a required field</span>
                                 <span ng-show="myForm.email.$dirty && myForm.email.$error.maxlength">Email is too long</span>
@@ -26,7 +26,7 @@
                         </div>
                         <div class="form-group" ng-class="{ 'has-error': myForm.role.$dirty && myForm.role.$error.required}">
                             <label class="col-sm-2 control-lable" for="role">Role</label>
-							<div class="col-sm-5" ng-controller="RoleController as rctrl">
+							<div class="col-sm-4" ng-controller="RoleController as rctrl">
 								<select name="role" class="form-control input-sm" required
 						              ng-model="ctrl.user.role.id"
 						              ng-options="role.id as role.roledesc for role in rctrl.roles">
@@ -36,7 +36,7 @@
 							</div>                    
                         </div>
 						<div class="form-group" >
-							<div class="col-sm-offset-2 col-sm-7">
+							<div class="col-sm-offset-2 col-sm-10">
 								<div ng-if="!ctrl.user.id">
 		                            <input type="submit"  value="Add" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
 		                            <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset</button>

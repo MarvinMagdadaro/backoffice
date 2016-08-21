@@ -64,16 +64,23 @@
 				<a class="navbar-brand" href="#"><img class="header-logo" src="res/images/trimark_logo_red.png"/></a>
 			</div>
 			<div class="navbar-form navbar-right">
-                <a ng-if="!currentUser" href="#/login" class="btn btn-link">Sign In</a>
-                <a ng-if="currentUser" href="#/app" class="btn btn-link">Hi {{currentUser.displayName}}!</a>
-                <a ng-if="currentUser" ng-controller="AppController as app" ng-click="app.logout()" class="btn btn-link"><i class="glyphicon glyphicon-lock"></i>Sign Out</a>
+                <ul class="nav navbar-nav">
+                    <li ng-if="!currentUser" ><a href="#/login"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>
+                    <li ng-if="currentUser" ><a href="#/app"><i class="glyphicon glyphicon-user"></i> {{currentUser.displayName}}</a></li>
+                    <li ng-if="currentUser" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a ng-controller="AppController as app" ng-click="app.logout()" ><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+                            <li><a href="#/changepw"><i class="glyphicon glyphicon-edit"></i> Change Password</a></a></li>
+                        </ul>
+                    </li>
+                </ul>
 			</div>
 		</div>
 	</nav>
 
 	<div id="wrapper" class="{{currentUser?'':'toggled'}}">
 		<div id="left-panel">
-			<div class="panel panel-default main-nav-panel">
+			<div class="panel panel-default main-nav-panel" ng-show="currentUser">
 				<div class="panel-heading">
 					<button type="button" class="btn btn-default" data-toggle="tooltip"  data-placement="bottom" title="Home" id="home">
 						<span class="glyphicon glyphicon-home"></span>

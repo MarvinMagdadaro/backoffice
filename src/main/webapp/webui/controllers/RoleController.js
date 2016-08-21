@@ -4,6 +4,7 @@ function RoleController($location, $scope, $rootScope, RoleService, ModalService
 	var self = this;
 	$scope.role={id:null,rolename:'',roledesc:'',permissions:[{id:null,permissionname:'',permissiondesc:'',group:'',category:'',rights:''}]};
 	self.roles=[];
+	$scope.VALID_PATTERN = '^[A-Z_]+$';
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = 10;
    	$scope.maxSize = 5;

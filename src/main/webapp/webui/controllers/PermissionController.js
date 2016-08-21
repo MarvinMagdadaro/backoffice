@@ -23,6 +23,7 @@ function PermissionController($location, $scope, $rootScope, PermissionService, 
 	                 {'rightsname':'Delete'}];
     self.permission={id:null,permissionname:'',permissiondesc:'',group:'',category:'',rights:''};
 	self.permissions=[];
+	$scope.VALID_PATTERN = '^[A-Z_]+$';
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = 10;
    	$scope.maxSize = 5;

@@ -110,10 +110,8 @@ TGWebModule.run(['$rootScope', '$location', '$cookieStore', '$http',
             if (restrictedPage && !loggedIn) {
                 if($location.path().indexOf('admin') > -1) {
                     $location.path('/admin.login');
-                } else if($location.path().indexOf('app') > -1) {
-                    $location.path('/login');
                 } else {
-                    $location.path('/home');
+                    $location.path('/login');
                 }
             }
         });
