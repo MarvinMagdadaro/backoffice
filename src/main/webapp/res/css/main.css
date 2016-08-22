@@ -2,7 +2,7 @@ body {
 	overflow-x: hidden;
 }
 
-#wrapper {
+#wrapper.toggled {
 	padding-left: 0;
 	-webkit-transition: all 0.5s ease;
 	-moz-transition: all 0.5s ease;
@@ -11,7 +11,7 @@ body {
 	padding-top: 25px;
 }
 
-#wrapper.toggled {
+#wrapper {
 	padding-left: 250px;
 }
 
@@ -19,7 +19,7 @@ body {
 	margin-top: 50px;
 }
 
-#left-panel {
+#wrapper.toggled #left-panel {
 	z-index: 1000;
 	position: fixed;
 	left: 250px;
@@ -33,13 +33,13 @@ body {
 	transition: all 0.5s ease;
 }
 
-#wrapper.toggled #left-panel {
+#left-panel {
 	width: 250px;
 }
 
 #main-panel {
 	width: 100%;
-/*	position: absolute;*/
+	position: absolute;
 	padding: 15px;
 }
 
@@ -50,7 +50,31 @@ body {
 
 .nav-bar-main {
 	background-color: #e2e2e2;
-	border-color: #c1c1c1;
+	border-color: #e2e2e2;
+}
+
+.nav-bar-main .navbar-toggle .icon-bar {
+ 	height: 4px;
+    width: 4px;  
+	background-color: #999999;
+}
+
+.nav-bar-main .navbar-toggle {
+	background-color: #e2e2e2;
+	border-color: #e2e2e2;
+}
+
+.nav-bar-main .navbar-toggle.collapsed {
+	background-color: #e2e2e2;
+	border-color: #e2e2e2;
+}
+
+.nav-bar-main .navbar-toggle:hover .icon-bar {
+	background-color: #ffffff;
+}
+
+.nav-bar-main .navbar-toggle.collapsed .icon-bar {
+	background-color: #999999;
 }
 
 /* SIDE PANEL */
