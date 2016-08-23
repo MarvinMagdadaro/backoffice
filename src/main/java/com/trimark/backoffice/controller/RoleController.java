@@ -84,17 +84,20 @@ public class RoleController extends BaseController {
         Role nRole = new Role();
         nRole.setRolename(role.getRolename());
         nRole.setRoledesc(role.getRoledesc());
-        
+
+        List<Permission> permissionList = new ArrayList<Permission>();
         if (role.getPermissions()!=null && !role.getPermissions().isEmpty()){
-        	List<Permission> permissionList = new ArrayList<Permission>();
         	for (PermissionDTO permission: role.getPermissions()){
-        		permissionList.add(mapper.map(permission, Permission.class));
+        		if (permission.getId()>0){
+        			permissionList.add(mapper.map(permission, Permission.class));
+        		}
         	}
-        	nRole.setPermissions(permissionList);
         }
-         
+    	nRole.setPermissions(permissionList);
+    	
         roleService.insert(nRole);
- 
+
+        
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/role/{id}").buildAndExpand(role.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -118,13 +121,15 @@ public class RoleController extends BaseController {
         currentRole.setRolename(role.getRolename());
         currentRole.setRoledesc(role.getRoledesc());
         
+        List<Permission> permissionList = new ArrayList<Permission>();
         if (role.getPermissions()!=null && !role.getPermissions().isEmpty()){
-        	List<Permission> permissionList = new ArrayList<Permission>();
         	for (PermissionDTO permission: role.getPermissions()){
-        		permissionList.add(mapper.map(permission, Permission.class));
+        		if (permission.getId()>0){
+        			permissionList.add(mapper.map(permission, Permission.class));
+        		}
         	}
-        	currentRole.setPermissions(permissionList);
         }
+        currentRole.setPermissions(permissionList);
          
         roleService.update(currentRole);
         return new ResponseEntity<RoleDTO>(role, HttpStatus.OK);

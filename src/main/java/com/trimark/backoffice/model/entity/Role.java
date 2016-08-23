@@ -1,5 +1,6 @@
 package com.trimark.backoffice.model.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public class Role extends JPAEntity<Long> implements GrantedAuthority {
     @NotNull(message = "{error.roles.role.null}")
     @NotEmpty(message = "{error.roles.role.empty}")
     @Size(max = 50, message = "{error.roles.role.max}")
-    @Column(name = "rolename", length = 50)
+    @Column(name = "rolename", length = 50, unique=true)
     private String rolename;
 
     @NotNull 
@@ -53,7 +54,7 @@ public class Role extends JPAEntity<Long> implements GrantedAuthority {
         joinColumns        = {@JoinColumn(name = "role_id",       referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "permission_id", referencedColumnName = "id")}
     )
-    private List<Permission> permissions;
+    private List<Permission> permissions = new ArrayList<Permission>(0);
 
     public String getRolename() {
         return rolename;
@@ -79,6 +80,7 @@ public class Role extends JPAEntity<Long> implements GrantedAuthority {
         this.userRoles = userRoles;
     }
 */
+
     public List<Permission> getPermissions() { 
         return permissions; 
     }

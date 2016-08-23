@@ -17,13 +17,13 @@ function PermissionController($location, $scope, $rootScope, PermissionService, 
 	                 {'groupname':'Scratchcards','catname':'Lottery'},
 	                 {'groupname':'Scratchcards','catname':'Stream'},
 	                 {'groupname':'Scratchcards','catname':'Batch'}];
-	self.rightslist=[{'rightsname':'Read'},
-	                 {'rightsname':'Create'},
+	self.rightslist=[{'rightsname':'Create'},
+	                 {'rightsname':'Read'},
 	                 {'rightsname':'Update'},
 	                 {'rightsname':'Delete'}];
     self.permission={id:null,permissionname:'',permissiondesc:'',group:'',category:'',rights:''};
 	self.permissions=[];
-	$scope.VALID_PATTERN = '^[A-Z_]+$';
+	$scope.VALID_PATTERN = '^[A-Z0-9_]+$';
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = 10;
    	$scope.maxSize = 5;

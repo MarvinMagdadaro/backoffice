@@ -26,7 +26,7 @@ public class Permission extends JPAEntity<Long> implements GrantedAuthority {
 	@NotNull(message = "{error.permission.permissionname.null}")
     @NotEmpty(message = "{error.permission.permissionname.empty}")
     @Size(max = 50, message = "{error.permission.permissionname.max}")
-    @Column(name = "permissionname", length = 50)
+    @Column(name = "permissionname", length = 50, unique=true)
     private String permissionname;
     
     @NotNull 
