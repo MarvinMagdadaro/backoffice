@@ -121,6 +121,7 @@ angular.module('App.Auth')
 	            		userpermissions.push(user.role.permissions[i].permissionname);
 	            	}            	
             	};
+            	user.role={};
                 $rootScope.globals = {
                     currentUser: user,
                     token: token,

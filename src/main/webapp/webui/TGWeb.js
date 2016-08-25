@@ -133,7 +133,7 @@ TGWebModule.factory('responseObserver', function responseObserver($q, $location)
                 break;
             }
             //return $q.reject(errorResponse);
-            return $q.resolve();
+            return $q.reject();
         }
     };
 });
