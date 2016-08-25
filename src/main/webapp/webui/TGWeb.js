@@ -67,19 +67,19 @@ TGWebModule.config(['$routeProvider', '$locationProvider', '$httpProvider', func
             })
 
             .when('/user', {
-                controller: 'UserController',
+                //controller: 'UserController',
                 templateUrl: 'webui/views/user.html',
                 controllerAs: 'app'
             })
 
             .when('/role', {
-                controller: 'RoleController',
+                //controller: 'RoleController',
                 templateUrl: 'webui/views/role.html',
                 controllerAs: 'app'
             })
 
             .when('/permission', {
-                controller: 'PermissionController',
+                //controller: 'PermissionController',
                 templateUrl: 'webui/views/permission.html',
                 controllerAs: 'app'
             })
@@ -132,7 +132,8 @@ TGWebModule.factory('responseObserver', function responseObserver($q, $location)
                 $location.path('/access-denied');
                 break;
             }
-            return $q.reject(errorResponse);
+            //return $q.reject(errorResponse);
+            return $q.resolve();
         }
     };
 });

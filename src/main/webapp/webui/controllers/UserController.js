@@ -1,8 +1,8 @@
 angular.module('App')
-    .controller('UserController', ['$location', '$scope', '$rootScope', 'UserService', 'ModalService', 'AlertService', 'FlashMessage',   
-function UserController($location, $scope, $rootScope, UserService, ModalService, AlertService, FlashMessage) {
+    .controller('UserController', ['$location', '$scope', '$rootScope', 'UserService', 'ModalService', 'AlertService', 'FlashMessage', '$anchorScroll',   
+function UserController($location, $scope, $rootScope, UserService, ModalService, AlertService, FlashMessage, $anchorScroll) {
 	var self = this;
-    self.user={id:null,displayName:'',email:'',role:[{id:null,rolename:'',roledesc:''}]};
+    self.user={id:null,displayName:'',email:'',role:{id:null,rolename:'',roledesc:''}};
 	self.users=[];
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = 10;
@@ -10,7 +10,7 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
 
     self.reset = function(){
     	//self.user={id:null,displayName:'',email:''};
-        self.user={id:null,displayName:'',email:'',role:[{id:null,rolename:'',roledesc:''}]};
+        self.user={id:null,displayName:'',email:'',role:{id:null,rolename:'',roledesc:''}};
         if ($scope.myForm) $scope.myForm.$setPristine(); //reset Form
     };
     
@@ -30,11 +30,12 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
         var modalOptions = {
                 closeButtonText: 'Cancel',
                 actionButtonText: 'Add User',
-                headerText: 'Add ' + user.displayName + '?',
-                bodyText: 'Are you sure you want to add this user?'
+                headerText: 'Add User?',
+                bodyText: {'User Name':user.displayName,'Email':user.email,'Role':user.role.roledesc}
             };
     	
         ModalService.showModal({}, modalOptions).then(function (result) {
+        	$anchorScroll();
 	    	UserService.createUser(user)
               .then(
         		  function(d){
@@ -57,11 +58,12 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
         var modalOptions = {
                 closeButtonText: 'Cancel',
                 actionButtonText: 'Update User',
-                headerText: 'Update ' + user.displayName + '?',
-                bodyText: 'Are you sure you want to update this user?'
+                headerText: 'Update User?',
+                bodyText: {'User Name':user.displayName,'Email':user.email,'Role':user.role.roledesc}
             };
     	
         ModalService.showModal({}, modalOptions).then(function (result) {
+        	$anchorScroll();
 	        UserService.updateUser(user, id)
               .then(
         		  function(d){
@@ -80,11 +82,12 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
         var modalOptions = {
                 closeButtonText: 'Cancel',
                 actionButtonText: 'Delete User',
-                headerText: 'Delete ' + user.displayName + '?',
-                bodyText: 'Are you sure you want to delete this user?'
+                headerText: 'Delete User?',
+                bodyText: {'User Name':user.displayName,'Email':user.email,'Role':user.role.roledesc}
             };
     	
         ModalService.showModal({}, modalOptions).then(function (result) {
+        	$anchorScroll();
 	    	UserService.deleteUser(user.id)
               .then(
         		  function(d){

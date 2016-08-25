@@ -1,6 +1,7 @@
-angular.module('App').service('ModalService', ['$uibModal',
-    function ($uibModal) {
-
+angular.module('App').service('ModalService', ['$uibModal', '$rootScope',
+    function ($uibModal, $rootScope) {
+		$rootScope.isArray = angular.isArray;
+	 	
         var modalDefaults = {
             backdrop: true,
             keyboard: true,
@@ -12,12 +13,14 @@ angular.module('App').service('ModalService', ['$uibModal',
             closeButtonText: 'Close',
             actionButtonText: 'OK',
             headerText: 'Proceed?',
-            bodyText: 'Perform this action?'
+            bodyText: {},
+            bodyDetails: []
         };
 
         this.showModal = function (customModalDefaults, customModalOptions) {
             if (!customModalDefaults) customModalDefaults = {};
             customModalDefaults.backdrop = 'static';
+            customModalOptions.bodyDetails = JSON.parse(JSON.stringify(customModalOptions.bodyText));
             return this.show(customModalDefaults, customModalOptions);
         };
 

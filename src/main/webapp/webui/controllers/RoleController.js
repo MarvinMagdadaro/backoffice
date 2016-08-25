@@ -1,6 +1,6 @@
 angular.module('App')
-    .controller('RoleController', ['$location', '$scope', '$rootScope', 'RoleService', 'ModalService', 'AlertService', 'FlashMessage',   
-function RoleController($location, $scope, $rootScope, RoleService, ModalService, AlertService, FlashMessage) {
+    .controller('RoleController', ['$location', '$scope', '$rootScope', 'RoleService', 'ModalService', 'AlertService', 'FlashMessage', '$anchorScroll',   
+function RoleController($location, $scope, $rootScope, RoleService, ModalService, AlertService, FlashMessage,  $anchorScroll) {
 	var self = this;
 	$scope.role={id:null,rolename:'',roledesc:'',permissions:[{id:null,permissionname:'',permissiondesc:'',group:'',category:'',rights:''}]};
 	self.roles=[];
@@ -30,11 +30,12 @@ function RoleController($location, $scope, $rootScope, RoleService, ModalService
         var modalOptions = {
                 closeButtonText: 'Cancel',
                 actionButtonText: 'Add Role',
-                headerText: 'Add ' + role.rolename + '?',
-                bodyText: 'Are you sure you want to add this role?'
+                headerText: 'Add Role?',
+                bodyText: {'Role Name':role.rolename,'Description':role.roledesc,'Permissions':role.permissions}
             };
     	
         ModalService.showModal({}, modalOptions).then(function (result) {
+        	$anchorScroll();
         	RoleService.createRole(role)
               .then(
         		  function(d){
@@ -58,11 +59,12 @@ function RoleController($location, $scope, $rootScope, RoleService, ModalService
         var modalOptions = {
                 closeButtonText: 'Cancel',
                 actionButtonText: 'Update Role',
-                headerText: 'Update ' + role.rolename + '?',
-                bodyText: 'Are you sure you want to update this role?'
+                headerText: 'Update Role?',
+                bodyText: {'Role Name':role.rolename,'Description':role.roledesc,'Permissions':role.permissions}
             };
     	
         ModalService.showModal({}, modalOptions).then(function (result) {
+        	$anchorScroll();
 	        RoleService.updateRole(role, id)
               .then(
         		  function(d){
@@ -81,11 +83,12 @@ function RoleController($location, $scope, $rootScope, RoleService, ModalService
         var modalOptions = {
                 closeButtonText: 'Cancel',
                 actionButtonText: 'Delete Role',
-                headerText: 'Delete ' + role.rolename + '?',
-                bodyText: 'Are you sure you want to delete this role?'
+                headerText: 'Delete Role?',
+                bodyText: {'Role Name':role.rolename,'Description':role.roledesc,'Permissions':role.permissions}
             };
     	
         ModalService.showModal({}, modalOptions).then(function (result) {
+        	$anchorScroll();
 	    	RoleService.deleteRole(role.id)
               .then(
         		  function(d){

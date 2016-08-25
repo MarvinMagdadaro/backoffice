@@ -1,6 +1,6 @@
 angular.module('App')
-    .controller('PermissionController', ['$location', '$scope', '$rootScope', 'PermissionService', 'ModalService', 'AlertService', 'FlashMessage',   
-function PermissionController($location, $scope, $rootScope, PermissionService, ModalService, AlertService, FlashMessage) {
+    .controller('PermissionController', ['$location', '$scope', '$rootScope', 'PermissionService', 'ModalService', 'AlertService', 'FlashMessage', '$anchorScroll',   
+function PermissionController($location, $scope, $rootScope, PermissionService, ModalService, AlertService, FlashMessage, $anchorScroll) {
 	var self = this;
 	self.groups=[{'groupname':'System and Security'},
 	             {'groupname':'Brands'},
@@ -49,11 +49,12 @@ function PermissionController($location, $scope, $rootScope, PermissionService, 
         var modalOptions = {
                 closeButtonText: 'Cancel',
                 actionButtonText: 'Add Permission',
-                headerText: 'Add ' + permission.permissionname + '?',
-                bodyText: 'Are you sure you want to add this permission?'
+                headerText: 'Add Permission?',
+                bodyText: {'Permission Name':permission.permissionname,'Description':permission.permissiondesc,'Group':permission.group,'Category':permission.category,'Rights':permission.rights}
             };
     	
         ModalService.showModal({}, modalOptions).then(function (result) {
+        	$anchorScroll();
 	    	PermissionService.createPermission(permission)
               .then(
         		  function(d){
@@ -76,11 +77,12 @@ function PermissionController($location, $scope, $rootScope, PermissionService, 
         var modalOptions = {
                 closeButtonText: 'Cancel',
                 actionButtonText: 'Update Permission',
-                headerText: 'Update ' + permission.permissionname + '?',
-                bodyText: 'Are you sure you want to update this permission?'
+                headerText: 'Update Permission?',
+                bodyText: {'Permission Name':permission.permissionname,'Description':permission.permissiondesc,'Group':permission.group,'Category':permission.category,'Rights':permission.rights}
             };
     	
         ModalService.showModal({}, modalOptions).then(function (result) {
+        	$anchorScroll();
 	        PermissionService.updatePermission(permission, id)
               .then(
         		  function(d){
@@ -99,11 +101,12 @@ function PermissionController($location, $scope, $rootScope, PermissionService, 
         var modalOptions = {
                 closeButtonText: 'Cancel',
                 actionButtonText: 'Delete Permission',
-                headerText: 'Delete ' + permission.permissionname + '?',
-                bodyText: 'Are you sure you want to delete this permission?'
+                headerText: 'Delete Permission?',
+                bodyText: {'Permission Name':permission.permissionname,'Description':permission.permissiondesc,'Group':permission.group,'Category':permission.category,'Rights':permission.rights}
             };
     	
         ModalService.showModal({}, modalOptions).then(function (result) {
+        	$anchorScroll();
 	    	PermissionService.deletePermission(permission.id)
               .then(
         		  function(d){

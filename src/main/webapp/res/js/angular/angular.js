@@ -24606,7 +24606,7 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
                 collectionKeys.push(itemKey);
               }
             }
-            collectionKeys.sort();
+            //collectionKeys.sort();
           }
 
           collectionLength = collectionKeys.length;
