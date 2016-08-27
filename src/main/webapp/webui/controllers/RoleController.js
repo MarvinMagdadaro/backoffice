@@ -1,14 +1,51 @@
 angular.module('App')
-    .controller('RoleController', ['$location', '$scope', '$rootScope', 'RoleService', 'ModalService', 'AlertService', 'FlashMessage', '$anchorScroll',   
-function RoleController($location, $scope, $rootScope, RoleService, ModalService, AlertService, FlashMessage,  $anchorScroll) {
+    .controller('RoleController', ['$location', '$scope', '$rootScope', 'RoleService', 'ModalService', 'AlertService', 'FlashMessage', '$anchorScroll', '$filter',  
+function RoleController($location, $scope, $rootScope, RoleService, ModalService, AlertService, FlashMessage,  $anchorScroll, $filter) {
 	var self = this;
 	$scope.role={id:null,rolename:'',roledesc:'',permissions:[{id:null,permissionname:'',permissiondesc:'',group:'',category:'',rights:''}]};
 	self.roles=[];
 	$scope.VALID_PATTERN = '^[A-Z0-9_]+$';
-	$scope.currentPage = 1;
-	$scope.itemsPerPage = 10;
-   	$scope.maxSize = 5;
+    $scope.currentPage = 1;  
+    $scope.numPerPage = 5;  
+    $scope.totalItems = 0;  
+    $scope.noOfPages = 5;
+    $scope.filteredList=[];
+    $scope.filterParams = {
+    		rolename: '',
+    		roledesc: '',
+            predicate: '',
+            reverse: false
+	};
+
+    $scope.updateFilter = function(){
+        var filtered;
+        filtered = $filter('filter')(self.roles, {rolename:$scope.filterParams.rolename,roledesc:$scope.filterParams.roledesc});
+        filtered = $filter('orderBy')(filtered, $scope.filterParams.predicate, $scope.filterParams.reverse);
+        $scope.filteredList = filtered;
+	};
     
+    $scope.$watchCollection('filterParams', function(newNames, oldNames) {
+        $scope.updateFilter();
+	});
+
+    $scope.order = function (predicate) {  
+    	$scope.filterParams.reverse = ($scope.filterParams.predicate === predicate) ? !$scope.filterParams.reverse : false;  
+    	$scope.filterParams.predicate = predicate;  
+    };  
+
+    $scope.clearFilter = function () {  
+    	$scope.filterParams.rolename = '';
+    	$scope.filterParams.roledesc = '';
+    };  
+
+    $scope.paginate = function (value) {  
+      var begin, end, index;  
+      begin = ($scope.currentPage - 1) * $scope.numPerPage;  
+      end = begin + $scope.numPerPage;  
+      index = $scope.filteredList.indexOf(value);  
+      return (begin <= index && index < end);  
+    };  
+	
     self.reset = function(){
     	$scope.role={id:null,rolename:'',roledesc:'',permissions:[{id:null,permissionname:'',permissiondesc:'',group:'',category:'',rights:''}]};
         $scope.myForm.$setPristine(); //reset Form
@@ -19,6 +56,7 @@ function RoleController($location, $scope, $rootScope, RoleService, ModalService
     	.then(
 			function(d) {
 				self.roles = d;
+				$scope.updateFilter();
 			},
 			function(errResponse){
 				AlertService.add('danger', 'Error while fetching Roles.');

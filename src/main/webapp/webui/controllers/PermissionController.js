@@ -1,6 +1,6 @@
 angular.module('App')
-    .controller('PermissionController', ['$location', '$scope', '$rootScope', 'PermissionService', 'ModalService', 'AlertService', 'FlashMessage', '$anchorScroll',   
-function PermissionController($location, $scope, $rootScope, PermissionService, ModalService, AlertService, FlashMessage, $anchorScroll) {
+    .controller('PermissionController', ['$location', '$scope', '$rootScope', 'PermissionService', 'ModalService', 'AlertService', 'FlashMessage', '$anchorScroll', '$filter',   
+function PermissionController($location, $scope, $rootScope, PermissionService, ModalService, AlertService, FlashMessage, $anchorScroll, $filter) {
 	var self = this;
 	self.groups=[{'groupname':'System and Security'},
 	             {'groupname':'Brands'},
@@ -22,12 +22,50 @@ function PermissionController($location, $scope, $rootScope, PermissionService, 
 	                 {'rightsname':'Update'},
 	                 {'rightsname':'Delete'}];
     self.permission={id:null,permissionname:'',permissiondesc:'',group:'',category:'',rights:''};
-	self.permissions=[];
+    self.permissions=[];
 	$scope.VALID_PATTERN = '^[A-Z0-9_]+$';
-	$scope.currentPage = 1;
-	$scope.itemsPerPage = 10;
-   	$scope.maxSize = 5;
+    $scope.currentPage = 1;  
+    $scope.numPerPage = 5;  
+    $scope.totalItems = 0;  
+    $scope.noOfPages = 5;
+    $scope.filteredList=[];
+    $scope.filterParams = {
+    		permissionname: '',
+    		permissiondesc: '',
+            predicate: '',
+            reverse: false
+	};
 
+    $scope.updateFilter = function(){
+        var filtered;
+        filtered = $filter('filter')(self.permissions, {permissionname:$scope.filterParams.permissionname,permissiondesc:$scope.filterParams.permissiondesc});
+        filtered = $filter('orderBy')(filtered, $scope.filterParams.predicate, $scope.filterParams.reverse);
+        $scope.filteredList = filtered;
+	};
+    
+    $scope.$watchCollection('filterParams', function(newNames, oldNames) {
+        $scope.updateFilter();
+	});
+
+    $scope.order = function (predicate) {  
+    	$scope.filterParams.reverse = ($scope.filterParams.predicate === predicate) ? !$scope.filterParams.reverse : false;  
+    	$scope.filterParams.predicate = predicate;  
+    	//$scope.updateFilter();
+    };  
+
+    $scope.clearFilter = function () {  
+    	$scope.filterParams.permissionname = '';
+    	$scope.filterParams.permissiondesc = '';
+    };  
+
+    $scope.paginate = function (value) {  
+      var begin, end, index;  
+      begin = ($scope.currentPage - 1) * $scope.numPerPage;  
+      end = begin + $scope.numPerPage;  
+      index = $scope.filteredList.indexOf(value);  
+      return (begin <= index && index < end);  
+    };  
+	
     self.reset = function(){
         self.permission={id:null,permissionname:'',permissiondesc:'',group:'',category:'',rights:''};
         $scope.myForm.$setPristine(); //reset Form
@@ -38,6 +76,7 @@ function PermissionController($location, $scope, $rootScope, PermissionService, 
     	.then(
 			function(d) {
 				self.permissions = d;
+				$scope.updateFilter();
 			},
 			function(errResponse){
 				AlertService.add('danger', 'Error while fetching Permissions.');
@@ -87,7 +126,7 @@ function PermissionController($location, $scope, $rootScope, PermissionService, 
               .then(
         		  function(d){
     				  self.reset();
-            		  self.fetchAllPermissions();	
+    				  self.fetchAllPermissions();	
             		  AlertService.add('success', 'Permission updated successfully.');
 	              },	
 	              function(errResponse){
@@ -111,7 +150,7 @@ function PermissionController($location, $scope, $rootScope, PermissionService, 
               .then(
         		  function(d){
     				  self.reset();
-            		  self.fetchAllPermissions();	
+    				  self.fetchAllPermissions();	
             		  AlertService.add('success', 'Permission deleted successfully.');
 	              },	
 	              function(errResponse){
@@ -146,7 +185,7 @@ function PermissionController($location, $scope, $rootScope, PermissionService, 
 
     self.cancel = function(){
     	self.reset();
-        self.fetchAllPermissions();
+    	self.fetchAllPermissions();
     };
     
 }]);

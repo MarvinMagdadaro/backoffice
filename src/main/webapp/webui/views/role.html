@@ -28,36 +28,6 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-lable" for="desc">Permissions</label>
                         </div>
-<!--                         
-                        <div class="form-group">
-                            <div class="col-sm-12" ng-controller="PermissionController as pctrl">
-							  <table class="table table-bordered">
-							    <thead>
-							      <tr>
-							        <th>Select</th>
-							        <th>Group</th>
-							        <th>Category</th>
-							        <th>Rights</th>
-							      </tr>
-							    </thead>
-							    
-							    <tbody ng-repeat="permission in pctrl.permissions">
-							      <tr>
-							        <td><input type="checkbox" ng-checked="ctrl.checkItem(permission.id)" ng-change="toggleItem()" ng-model="permission.selected"></td>
-							        <td>{{ permission.group }}</td>
-							        <td>{{ permission.category }}</td>
-							        <td>{{ permission.rights }}</td>
-							      </tr>
-							    </tbody>
-							  </table>    
-   	                        </div>
-                        </div>
-						  <div class="debug">
-						    <h2>debug</h2>
-						    <br/>
-						    <b>{{role.permissions}}</b>
-						  </div>	                      
- -->
 						<div class="row" ng-controller="PermissionController as pctrl">
 							<div class="col-lg-12" ng-repeat="(groupname, gp) in pctrl.permissions | orderBy: 'group' | groupBy: 'group'">
 								<div class="panel panel-default">
@@ -150,13 +120,21 @@
 	                    <thead>
 	                        <tr>
 	                            <th>ID</th>
-	                            <th>Role Name</th>
-	                            <th>Role Description</th>
-	                            <th></th>
+	                            <th><a href="" ng-click="order('rolename')">Role Name 
+	                            <span class="glyphicon sort-icon" ng-show="filterParams.predicate=='rolename'" ng-class="{'glyphicon-chevron-up':filterParams.reverse,'glyphicon-chevron-down':!filterParams.reverse}"></span></a></th>
+	                            <th><a href="" ng-click="order('roledesc')">Role Description 
+	                            <span class="glyphicon sort-icon" ng-show="filterParams.predicate=='roledesc'" ng-class="{'glyphicon-chevron-up':filterParams.reverse,'glyphicon-chevron-down':!filterParams.reverse}"></span></a></th>
+	                            <th>Action</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
-	                        <tr ng-repeat="u in ctrl.roles.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+				           <tr>  
+				             <td>Filter</td>  
+				             <td><input type="text" ng-model="filterParams.rolename" /></td>  
+				             <td><input type="text" ng-model="filterParams.roledesc" /> </td>  
+				             <td style="text-align: center"><button type="button" ng-click="clearFilter()" class="btn btn-primary btn-sm">Clear Filter</button></td>  
+				           </tr>  
+	                        <tr ng-repeat="u in filteredList | filter:paginate">
 	                            <td><span ng-bind="u.id"></span></td>
 	                            <td><span ng-bind="u.rolename"></span></td>
 	                            <td><span ng-bind="u.roledesc"></span></td>
@@ -171,9 +149,9 @@
 								<td colspan="4">
 								    <uib-pagination 
 								      ng-model="currentPage"
-								      total-items="ctrl.roles.length"
-								      items-per-page="itemsPerPage" 
-								      max-size="maxSize"  
+								      total-items="filteredList.length"
+								      items-per-page="numPerPage" 
+								      max-size="noOfPages"  
 								      boundary-links="true">
 								    </uib-pagination>
 								</td>

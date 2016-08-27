@@ -91,14 +91,22 @@
 	                    <thead>
 	                        <tr>
 	                            <th>ID</th>
-	                            <th>Permission Name</th>
-	                            <th>Permission Description</th>
-	                            <th></th>
+	                            <th><a href="" ng-click="order('permissionname')">Permission Name 
+	                            <span class="glyphicon sort-icon" ng-show="filterParams.predicate=='permissionname'" ng-class="{'glyphicon-chevron-up':filterParams.reverse,'glyphicon-chevron-down':!filterParams.reverse}"></span></a></th>
+	                            <th><a href="" ng-click="order('permissiondesc')">Permission Description 
+	                            <span class="glyphicon sort-icon" ng-show="filterParams.predicate=='permissiondesc'" ng-class="{'glyphicon-chevron-up':filterParams.reverse,'glyphicon-chevron-down':!filterParams.reverse}"></span></a></th>
+	                            <th>Action</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
-	                        <tr ng-repeat="u in ctrl.permissions.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))" >
-	                        <!-- tr ng-repeat="u in ctrl.permissions | limitTo: itemsPerPage: (currentPage - 1) * itemsPerPage"-->
+				           <tr>  
+				             <td>Filter</td>  
+				             <td><input type="text" ng-model="filterParams.permissionname" /></td>  
+				             <td><input type="text" ng-model="filterParams.permissiondesc" /> </td>  
+				             <td style="text-align: center"><button type="button" ng-click="clearFilter()" class="btn btn-primary btn-sm">Clear Filter</button></td>  
+				           </tr>  
+	                        <!-- tr ng-repeat="u in ctrl.permissions.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))" -->
+	                        <tr ng-repeat="u in filteredList | filter:paginate">
 	                            <td><span ng-bind="u.id"></span></td>
 	                            <td><span ng-bind="u.permissionname"></span></td>
 	                            <td><span ng-bind="u.permissiondesc"></span></td>
@@ -113,9 +121,9 @@
 								<td colspan="4">
 								    <uib-pagination 
 								      ng-model="currentPage"
-								      total-items="ctrl.permissions.length"
-								      items-per-page="itemsPerPage" 
-								      max-size="maxSize"  
+								      total-items="filteredList.length"
+								      items-per-page="numPerPage" 
+								      max-size="noOfPages"  
 								      boundary-links="true">
 								    </uib-pagination>
 								</td>

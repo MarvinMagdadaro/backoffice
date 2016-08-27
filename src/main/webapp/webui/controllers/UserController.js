@@ -1,13 +1,52 @@
 angular.module('App')
-    .controller('UserController', ['$location', '$scope', '$rootScope', 'UserService', 'ModalService', 'AlertService', 'FlashMessage', '$anchorScroll',   
-function UserController($location, $scope, $rootScope, UserService, ModalService, AlertService, FlashMessage, $anchorScroll) {
+    .controller('UserController', ['$location', '$scope', '$rootScope', 'UserService', 'ModalService', 'AlertService', 'FlashMessage', '$anchorScroll', '$filter',   
+function UserController($location, $scope, $rootScope, UserService, ModalService, AlertService, FlashMessage, $anchorScroll, $filter) {
 	var self = this;
     self.user={id:null,displayName:'',email:'',role:{id:null,rolename:'',roledesc:''}};
 	self.users=[];
-	$scope.currentPage = 1;
-	$scope.itemsPerPage = 10;
-   	$scope.maxSize = 5;
+    $scope.currentPage = 1;  
+    $scope.numPerPage = 5;  
+    $scope.totalItems = 0;  
+    $scope.noOfPages = 5;
+    $scope.filteredList=[];
+    $scope.filterParams = {
+    		displayName: '',
+    		email: '',
+    		role: '',
+            predicate: '',
+            reverse: false
+	};
 
+    $scope.updateFilter = function(){
+        var filtered;
+        filtered = $filter('filter')(self.users, {displayName:$scope.filterParams.displayName,email:$scope.filterParams.email,role:{roledesc:$scope.filterParams.role}});
+        filtered = $filter('orderBy')(filtered, $scope.filterParams.predicate, $scope.filterParams.reverse);
+        $scope.filteredList = filtered;
+	};
+    
+    $scope.$watchCollection('filterParams', function(newNames, oldNames) {
+        $scope.updateFilter();
+	});
+
+    $scope.order = function (predicate) {  
+    	$scope.filterParams.reverse = ($scope.filterParams.predicate === predicate) ? !$scope.filterParams.reverse : false;  
+    	$scope.filterParams.predicate = predicate;  
+    };  
+
+    $scope.clearFilter = function () {  
+    	$scope.filterParams.displayName = '';
+    	$scope.filterParams.email = '';
+    	$scope.filterParams.role = '';
+    };  
+
+    $scope.paginate = function (value) {  
+      var begin, end, index;  
+      begin = ($scope.currentPage - 1) * $scope.numPerPage;  
+      end = begin + $scope.numPerPage;  
+      index = $scope.filteredList.indexOf(value);  
+      return (begin <= index && index < end);  
+    };  
+	
     self.reset = function(){
     	//self.user={id:null,displayName:'',email:''};
         self.user={id:null,displayName:'',email:'',role:{id:null,rolename:'',roledesc:''}};
@@ -19,6 +58,7 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
     	.then(
 			function(d) {
 				self.users = d;
+				$scope.updateFilter();
 			},
 			function(errResponse){
 				AlertService.add('danger', 'Error while fetching Users.');

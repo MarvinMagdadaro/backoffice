@@ -70,14 +70,23 @@
 	                    <thead>
 	                        <tr>
 	                            <th>ID</th>
-	                            <th>User Name</th>
-	                            <th>Email</th>
-	                            <th>Role</th>
-	                            <th></th>
+	                            <th><a href="" ng-click="order('displayName')">User Name 
+	                            <span class="glyphicon sort-icon" ng-show="filterParams.predicate=='displayName'" ng-class="{'glyphicon-chevron-up':filterParams.reverse,'glyphicon-chevron-down':!filterParams.reverse}"></span></a></th>
+	                            <th><a href="" ng-click="order('email')">Email 
+	                            <span class="glyphicon sort-icon" ng-show="filterParams.predicate=='email'" ng-class="{'glyphicon-chevron-up':filterParams.reverse,'glyphicon-chevron-down':!filterParams.reverse}"></span></a></th>
+	                            <th><a href="" ng-click="order('role.roledesc')">Role 
+	                            <span class="glyphicon sort-icon" ng-show="filterParams.predicate=='role.roledesc'" ng-class="{'glyphicon-chevron-up':filterParams.reverse,'glyphicon-chevron-down':!filterParams.reverse}"></span></a></th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
-	                        <tr ng-repeat="u in ctrl.users.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+				           <tr>  
+				             <td>Filter</td>  
+				             <td><input type="text" ng-model="filterParams.displayName" /></td>  
+				             <td><input type="text" ng-model="filterParams.email" /> </td>  
+				             <td><input type="text" ng-model="filterParams.role" /> </td>  
+				             <td style="text-align: center"><button type="button" ng-click="clearFilter()" class="btn btn-primary btn-sm">Clear Filter</button></td>  
+				           </tr>  
+	                        <tr ng-repeat="u in filteredList | filter:paginate">
 	                            <td><span ng-bind="u.id"></span></td>
 	                            <td><span ng-bind="u.displayName"></span></td>
 	                            <td><span ng-bind="u.email"></span></td>
@@ -93,9 +102,9 @@
 								<td colspan="5">
 								    <uib-pagination 
 								      ng-model="currentPage"
-								      total-items="ctrl.users.length"
-								      items-per-page="itemsPerPage" 
-								      max-size="maxSize"  
+								      total-items="filteredList.length"
+								      items-per-page="numPerPage" 
+								      max-size="noOfPages"  
 								      boundary-links="true">
 								    </uib-pagination>
 								</td>
