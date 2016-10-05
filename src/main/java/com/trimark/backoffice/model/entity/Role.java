@@ -2,7 +2,6 @@ package com.trimark.backoffice.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -12,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,14 +41,6 @@ public class Role extends JPAEntity<Long> implements GrantedAuthority {
     @Column(name = "roledesc", length = 255)
     private String roledesc;
 
-    /*
-    @OneToMany(fetch = FetchType.EAGER)  
-    @JoinTable(name = "user_roles",   
-        joinColumns        = {@JoinColumn(name = "role_id", referencedColumnName = "id")},  
-        inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}  
-    )
-    private Set<User> userRoles;
-*/
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "role_permissions",
         joinColumns        = {@JoinColumn(name = "role_id",       referencedColumnName = "id")},
@@ -56,6 +48,16 @@ public class Role extends JPAEntity<Long> implements GrantedAuthority {
     )
     private List<Permission> permissions = new ArrayList<Permission>(0);
 
+    @OneToOne(fetch = FetchType.EAGER)  
+    @JoinTable(name = "role_organizations",  
+        joinColumns        = {@JoinColumn(name = "role_id", referencedColumnName = "id")},  
+        inverseJoinColumns = {@JoinColumn(name = "organization_id", referencedColumnName = "id")}  
+    )
+    private Organization organization;
+
+    @Column(name = "roletype", length = 12)
+    private String roletype;
+    
     public String getRolename() {
         return rolename;
     }
@@ -71,15 +73,14 @@ public class Role extends JPAEntity<Long> implements GrantedAuthority {
     public void setRoledesc(String roledesc) {
         this.roledesc = roledesc;
     }
-/*
-    public Set<User> getUserRoles() {
-        return userRoles;
+
+    public String getRoletype() {
+        return roletype;
     }
 
-    public void setUserRoles(Set<User> userRoles) {
-        this.userRoles = userRoles;
+    public void setRoletype(String roletype) {
+        this.roletype = roletype;
     }
-*/
 
     public List<Permission> getPermissions() { 
         return permissions; 
@@ -87,6 +88,15 @@ public class Role extends JPAEntity<Long> implements GrantedAuthority {
 
     public void setPermissions(List<Permission> permissions) {
         this.permissions = permissions;
+    }
+
+    @Column(nullable = false)
+    public Organization getOrganization() {
+        return this.organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
     @Override

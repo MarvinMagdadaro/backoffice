@@ -28,11 +28,21 @@
                             <label class="col-sm-2 control-lable" for="role">Role</label>
 							<div class="col-sm-4" ng-controller="RoleController as rctrl">
 								<select name="role" class="form-control input-sm" required
-						              ng-model="ctrl.user.role.id"
-						              ng-options="role.id as role.roledesc for role in rctrl.roles">
+						              ng-model="ctrl.user.role"
+						              ng-options="role as role.roledesc for role in rctrl.roles track by role.id">
 						              <option value="">-Select Role-</option>
 								</select>
                                 <span ng-show="myForm.role.$dirty && myForm.role.$error.required">Role is a required field</span>
+							</div>                    
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': myForm.enabled.$dirty && myForm.enabled.$error.required}">
+                            <label class="col-sm-2 control-lable" for="enabled">Enabled</label>
+							<div class="col-sm-4">
+								<select name="enabled" class="form-control input-sm" required
+						              ng-model="ctrl.user.enabled"
+						              ng-options="o.v as o.n for o in [{ n: 'false', v: false }, { n: 'true', v: true }]">
+								</select>
+                                <span ng-show="myForm.enabled.$dirty && myForm.enabled.$error.required">Enabled is a required field</span>
 							</div>                    
                         </div>
 						<div class="form-group" >
@@ -62,9 +72,10 @@
 	                <table class="table table-bordered">
 				        <colgroup>
 							<col class="col-sm-1">
-							<col class="col-sm-4">
+							<col class="col-sm-3">
 							<col class="col-sm-3">
 							<col class="col-sm-2">
+							<col class="col-sm-1">
 							<col class="col-sm-2">
 				        </colgroup>
 	                    <thead>
@@ -76,6 +87,8 @@
 	                            <span class="glyphicon sort-icon" ng-show="filterParams.predicate=='email'" ng-class="{'glyphicon-chevron-up':filterParams.reverse,'glyphicon-chevron-down':!filterParams.reverse}"></span></a></th>
 	                            <th><a href="" ng-click="order('role.roledesc')">Role 
 	                            <span class="glyphicon sort-icon" ng-show="filterParams.predicate=='role.roledesc'" ng-class="{'glyphicon-chevron-up':filterParams.reverse,'glyphicon-chevron-down':!filterParams.reverse}"></span></a></th>
+	                            <th><a href="" ng-click="order('enabled')">Enabled 
+	                            <span class="glyphicon sort-icon" ng-show="filterParams.predicate=='enabled'" ng-class="{'glyphicon-chevron-up':filterParams.reverse,'glyphicon-chevron-down':!filterParams.reverse}"></span></a></th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
@@ -84,6 +97,7 @@
 				             <td><input type="text" ng-model="filterParams.displayName" /></td>  
 				             <td><input type="text" ng-model="filterParams.email" /> </td>  
 				             <td><input type="text" ng-model="filterParams.role" /> </td>  
+				             <td><input type="text" ng-model="filterParams.enabled" /> </td>  
 				             <td style="text-align: center"><button type="button" ng-click="clearFilter()" class="btn btn-primary btn-sm">Clear Filter</button></td>  
 				           </tr>  
 	                        <tr ng-repeat="u in filteredList | filter:paginate">
@@ -91,6 +105,7 @@
 	                            <td><span ng-bind="u.displayName"></span></td>
 	                            <td><span ng-bind="u.email"></span></td>
 	                            <td><span ng-bind="u.role.roledesc"></span></td>
+	                            <td><span ng-bind="u.enabled"></span></td>
 	                            <td style="text-align: center">
 	                            <button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success btn-sm btn-sm">Edit</button>  
 	                            <button type="button" ng-click="ctrl.remove(u)" class="btn btn-danger btn-sm btn-smh">Remove</button>

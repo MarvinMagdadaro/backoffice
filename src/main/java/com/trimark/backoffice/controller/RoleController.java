@@ -23,6 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.trimark.backoffice.framework.controller.BaseController;
 import com.trimark.backoffice.model.dto.PermissionDTO;
 import com.trimark.backoffice.model.dto.RoleDTO;
+import com.trimark.backoffice.model.entity.Organization;
 import com.trimark.backoffice.model.entity.Permission;
 import com.trimark.backoffice.model.entity.Role;
 import com.trimark.backoffice.service.RoleService;
@@ -84,6 +85,7 @@ public class RoleController extends BaseController {
         Role nRole = new Role();
         nRole.setRolename(role.getRolename());
         nRole.setRoledesc(role.getRoledesc());
+        nRole.setRoletype(role.getRoletype());
 
         List<Permission> permissionList = new ArrayList<Permission>();
         if (role.getPermissions()!=null && !role.getPermissions().isEmpty()){
@@ -94,6 +96,7 @@ public class RoleController extends BaseController {
         	}
         }
     	nRole.setPermissions(permissionList);
+    	nRole.setOrganization(mapper.map(role.getOrganization(), Organization.class));
     	
         roleService.insert(nRole);
 
@@ -120,6 +123,7 @@ public class RoleController extends BaseController {
  
         currentRole.setRolename(role.getRolename());
         currentRole.setRoledesc(role.getRoledesc());
+        currentRole.setRoletype(role.getRoletype());
         
         List<Permission> permissionList = new ArrayList<Permission>();
         if (role.getPermissions()!=null && !role.getPermissions().isEmpty()){
@@ -130,6 +134,7 @@ public class RoleController extends BaseController {
         	}
         }
         currentRole.setPermissions(permissionList);
+        currentRole.setOrganization(mapper.map(role.getOrganization(), Organization.class));
          
         roleService.update(currentRole);
         return new ResponseEntity<RoleDTO>(role, HttpStatus.OK);

@@ -41,12 +41,14 @@
     <script src="webui/controllers/UserController.js"></script>
     <script src="webui/controllers/RoleController.js"></script>
     <script src="webui/controllers/PermissionController.js"></script>
+    <script src="webui/controllers/OrganizationController.js"></script>
     <script src="webui/controllers/BodyController.js"></script>
     <script src="webui/services/AppService.js"></script>
     <script src="webui/services/AuthService.js"></script>
     <script src="webui/services/UserService.js"></script>
     <script src="webui/services/RoleService.js"></script>
     <script src="webui/services/PermissionService.js"></script>
+    <script src="webui/services/OrganizationService.js"></script>
     <script src="webui/services/ModalService.js"></script>
     <script src="webui/services/AlertService.js"></script>
     <script src="webui/TGWeb.js"></script>
@@ -148,6 +150,7 @@
 						<li>
 							<a href="" allowed="ROLE_ADMIN" data-toggle="collapse" data-target="#adminMenu">Administration <i class="glyphicon glyphicon-chevron-down"></i></a>
 							<ul class="side-nav sub collapse out" id="adminMenu">
+								<li><a href="#/organization" allowed="ROLE_ADMIN">Organization Management</a></li>  
 								<li><a href="#/user" allowed="ROLE_ADMIN">User Management</a></li>  
 								<li><a href="#/role" allowed="ROLE_ADMIN">Role Management</a></li>
 								<li><a href="#/permission" allowed="ROLE_ADMIN">Permission Management</a></li>

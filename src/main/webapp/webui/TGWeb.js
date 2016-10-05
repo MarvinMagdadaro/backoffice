@@ -17,70 +17,64 @@ TGWebModule.config(['$routeProvider', '$locationProvider', '$httpProvider', func
                 templateUrl: 'webui/views/home.html',
                 controllerAs: 'home'
             })
-
             .when('/admin.login', {
                 controller: 'LoginController',
                 templateUrl: 'webui/views/login.html',
                 controllerAs: 'lc'
             })
-
             .when('/login', {
                 controller: 'LoginController',
                 templateUrl: 'webui/views/login.html',
                 controllerAs: 'lc'
             })
-
             .when('/resetpw', {
                 controller: 'LoginController',
                 templateUrl: 'webui/views/resetpw.html',
                 controllerAs: 'lc'
             })
-
             .when('/register', {
                 controller: 'RegisterController',
                 templateUrl: 'webui/views/register.html',
                 controllerAs: 'rc'
             })
-
             .when('/access-denied', {
                 controller: 'LoginController',
                 templateUrl: 'webui/views/access-denied.html',
                 controllerAs: 'lc'
             })
-
             .when('/admin', {
                 controller: 'AdminController',
                 templateUrl: 'webui/views/dashboard.html',
                 controllerAs: 'adm'
             })
-
             .when('/app', {
                 controller: 'AppController',
                 templateUrl: 'webui/views/dashboard.html',
                 controllerAs: 'app'
             })
-
             .when('/changepw', {
                 controller: 'AppController',
                 templateUrl: 'webui/views/changepw.html',
                 controllerAs: 'app'
             })
-
             .when('/user', {
                 //controller: 'UserController',
                 templateUrl: 'webui/views/user.html',
                 controllerAs: 'app'
             })
-
             .when('/role', {
                 //controller: 'RoleController',
                 templateUrl: 'webui/views/role.html',
                 controllerAs: 'app'
             })
-
             .when('/permission', {
                 //controller: 'PermissionController',
                 templateUrl: 'webui/views/permission.html',
+                controllerAs: 'app'
+            })
+            .when('/organization', {
+                //controller: 'OrganizationController',
+                templateUrl: 'webui/views/organization.html',
                 controllerAs: 'app'
             })
 
@@ -104,7 +98,7 @@ TGWebModule.run(['$rootScope', '$location', '$cookieStore', '$http',
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             //console.log('received event: ' + event + ' from: ' + current + ' to go to next: ' + next);
             // redirect to login page if not logged in and trying to access a restricted page
-            var restrictedPage = $.inArray($location.path(), ['/login', '/register', '/admin.login', '/adm.register', '/admin', '/resetpw']) === -1;
+            var restrictedPage = $.inArray($location.path(), ['/login','/register','/admin.login','/adm.register','/admin','/resetpw','/access-denied']) === -1;
             var loggedIn = $rootScope.globals.currentUser;
             $rootScope.currentUser = $rootScope.globals.currentUser;
             if (restrictedPage && !loggedIn) {

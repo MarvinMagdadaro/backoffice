@@ -52,6 +52,13 @@ public class User extends JPAEntity<Long> implements UserDetails {
     )
     private Role role;
 
+    @OneToOne(fetch = FetchType.EAGER)  
+    @JoinTable(name = "user_organizations",  
+        joinColumns        = {@JoinColumn(name = "user_id", referencedColumnName = "id")},  
+        inverseJoinColumns = {@JoinColumn(name = "organization_id", referencedColumnName = "id")}  
+    )
+    private Organization organization;
+
     @Column @Email @NotNull @NotBlank
     public String getEmail() {
         return this.email;
@@ -70,8 +77,12 @@ public class User extends JPAEntity<Long> implements UserDetails {
         this.password = password;
     }
 
-    @Column(nullable = false)
+    @JsonIgnore @Column(nullable = false)
     public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    public boolean getEnabled() {
         return this.enabled;
     }
 
@@ -86,6 +97,15 @@ public class User extends JPAEntity<Long> implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Column(nullable = false)
+    public Organization getOrganization() {
+        return this.organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
     @Column(name="display_name")

@@ -24,6 +24,7 @@
 		<intercept-url pattern="/webui/views/user.html" access="hasAnyAuthority('ROLE_ADMIN')"/>
 		<intercept-url pattern="/webui/views/role.html" access="hasAnyAuthority('ROLE_ADMIN')"/>
 		<intercept-url pattern="/webui/views/permission.html" access="hasAnyAuthority('ROLE_ADMIN')"/>
+		<intercept-url pattern="/webui/views/organization.html" access="hasAnyAuthority('ROLE_ADMIN')"/>
         <intercept-url pattern="/home" access="permitAll" />
         <intercept-url pattern="/favicon.ico" access="permitAll"/>
         <intercept-url pattern="../../../webapp/webui/views/common/footer.html" access="permitAll" />

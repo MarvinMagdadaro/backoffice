@@ -10,7 +10,9 @@ public class UserDTO {
     String salt;
     int keySize;
     int iterations;
+    boolean enabled;
     RoleDTO role;
+    OrganizationDTO organization;
 
 	public long getId() {
 		return id;
@@ -84,11 +86,27 @@ public class UserDTO {
         this.iterations = iterations;
     }
 
+    public boolean getEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public RoleDTO getRole() {
         return role;
     }
 
     public void setRole(RoleDTO role) {
         this.role = role;
+    }
+
+    public OrganizationDTO getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(OrganizationDTO organization) {
+        this.organization = organization;
     }
 }

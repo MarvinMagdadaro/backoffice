@@ -8,6 +8,7 @@ import com.trimark.backoffice.auth.JWTTokenAuthFilter;
 import com.trimark.backoffice.framework.api.APIResponse;
 import com.trimark.backoffice.framework.controller.BaseController;
 import com.trimark.backoffice.model.dto.UserDTO;
+import com.trimark.backoffice.model.entity.Organization;
 import com.trimark.backoffice.model.entity.Role;
 import com.trimark.backoffice.model.entity.User;
 import com.trimark.backoffice.service.MailJobService;
@@ -132,7 +133,7 @@ public class UserController extends BaseController {
         user.setDisplayName(userDTO.getDisplayName());
         user.setPassword(password);
         user.setEnabled(true);
-        user.setRole(getUserRole());
+        user.setRole(getUserRole("ROLE_USER"));
         userService.registerUser(user, request);
 
         HashMap<String, Object> authResp = new HashMap<>();
@@ -235,8 +236,10 @@ public class UserController extends BaseController {
         user.setEmail(userDTO.getEmail());
         user.setDisplayName(userDTO.getDisplayName());
         user.setPassword(password);
-        user.setEnabled(true);
-        user.setRole(getUserRole());
+        user.setEnabled(user.getEnabled());
+        //user.setRole(getUserRole("ROLE_USER"));
+        user.setRole(mapper.map(user.getRole(), Role.class));
+        user.setOrganization(mapper.map(user.getOrganization(), Organization.class));
         userService.insert(user);
  
         HttpHeaders headers = new HttpHeaders();
@@ -258,7 +261,9 @@ public class UserController extends BaseController {
  
         currentUser.setEmail(user.getEmail());
         currentUser.setDisplayName(user.getDisplayName());
+        currentUser.setEnabled(user.getEnabled());
         currentUser.setRole(mapper.map(user.getRole(), Role.class));
+        currentUser.setOrganization(mapper.map(user.getOrganization(), Organization.class));
          
         userService.update(currentUser);
         return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
@@ -318,11 +323,11 @@ public class UserController extends BaseController {
         }
     }
 
-    private Role getUserRole() throws Exception {
-    	Role role = roleService.findByRolename("ROLE_USER");
+    private Role getUserRole(String rolename) throws Exception {
+    	Role role = roleService.findByRolename(rolename);
     	if (role==null) {
 	        role = new Role();
-	        role.setRolename("ROLE_USER");
+	        role.setRolename(rolename);
 	        role.setRoledesc("User");
 	        roleService.insert(role);
     	}

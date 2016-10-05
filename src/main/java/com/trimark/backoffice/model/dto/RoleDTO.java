@@ -5,9 +5,11 @@ import java.util.List;
 public class RoleDTO {
 
 	private long id;
-    private String rolename;
-    private String roledesc;
-    private List <PermissionDTO> permissions;
+    String rolename;
+    String roledesc;
+    String roletype;
+    List <PermissionDTO> permissions;
+    OrganizationDTO organization;
     
     public long getId() {
         return id;
@@ -39,6 +41,22 @@ public class RoleDTO {
 
     public void setRoledesc(String roledesc) {
         this.roledesc = roledesc;
+    }
+
+	public String getRoletype() {
+        return roletype;
+    }
+
+    public void setRoletype(String roletype) {
+        this.roletype = roletype;
+    }
+
+    public OrganizationDTO getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(OrganizationDTO organization) {
+        this.organization = organization;
     }
 
     @Override

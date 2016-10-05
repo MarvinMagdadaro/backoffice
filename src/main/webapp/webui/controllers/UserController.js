@@ -2,7 +2,7 @@ angular.module('App')
     .controller('UserController', ['$location', '$scope', '$rootScope', 'UserService', 'ModalService', 'AlertService', 'FlashMessage', '$anchorScroll', '$filter',   
 function UserController($location, $scope, $rootScope, UserService, ModalService, AlertService, FlashMessage, $anchorScroll, $filter) {
 	var self = this;
-    self.user={id:null,displayName:'',email:'',role:{id:null,rolename:'',roledesc:''}};
+    self.user={id:null,displayName:'',email:'',enabled:false,role:{id:null,rolename:'',roledesc:''}};
 	self.users=[];
     $scope.currentPage = 1;  
     $scope.numPerPage = 5;  
@@ -12,6 +12,7 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
     $scope.filterParams = {
     		displayName: '',
     		email: '',
+    		enabled: '',
     		role: '',
             predicate: '',
             reverse: false
@@ -19,7 +20,7 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
 
     $scope.updateFilter = function(){
         var filtered;
-        filtered = $filter('filter')(self.users, {displayName:$scope.filterParams.displayName,email:$scope.filterParams.email,role:{roledesc:$scope.filterParams.role}});
+        filtered = $filter('filter')(self.users, {displayName:$scope.filterParams.displayName,email:$scope.filterParams.email,enabled:$scope.filterParams.enabled,role:{roledesc:$scope.filterParams.role}});
         filtered = $filter('orderBy')(filtered, $scope.filterParams.predicate, $scope.filterParams.reverse);
         $scope.filteredList = filtered;
 	};
@@ -36,6 +37,7 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
     $scope.clearFilter = function () {  
     	$scope.filterParams.displayName = '';
     	$scope.filterParams.email = '';
+    	$scope.filterParams.enabled = '';
     	$scope.filterParams.role = '';
     };  
 
@@ -49,7 +51,7 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
 	
     self.reset = function(){
     	//self.user={id:null,displayName:'',email:''};
-        self.user={id:null,displayName:'',email:'',role:{id:null,rolename:'',roledesc:''}};
+        self.user={id:null,displayName:'',email:'',enabled:false,role:{id:null,rolename:'',roledesc:''}};
         if ($scope.myForm) $scope.myForm.$setPristine(); //reset Form
     };
     
@@ -71,7 +73,7 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
                 closeButtonText: 'Cancel',
                 actionButtonText: 'Add User',
                 headerText: 'Add User?',
-                bodyText: {'User Name':user.displayName,'Email':user.email,'Role':user.role.roledesc}
+                bodyText: {'User Name':user.displayName,'Email':user.email,'Enabled':user.enabled,'Role':user.role.roledesc}
             };
     	
         ModalService.showModal({}, modalOptions).then(function (result) {
@@ -99,7 +101,7 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
                 closeButtonText: 'Cancel',
                 actionButtonText: 'Update User',
                 headerText: 'Update User?',
-                bodyText: {'User Name':user.displayName,'Email':user.email,'Role':user.role.roledesc}
+                bodyText: {'User Name':user.displayName,'Email':user.email,'Enabled':user.enabled,'Role':user.role.roledesc}
             };
     	
         ModalService.showModal({}, modalOptions).then(function (result) {
@@ -123,7 +125,7 @@ function UserController($location, $scope, $rootScope, UserService, ModalService
                 closeButtonText: 'Cancel',
                 actionButtonText: 'Delete User',
                 headerText: 'Delete User?',
-                bodyText: {'User Name':user.displayName,'Email':user.email,'Role':user.role.roledesc}
+                bodyText: {'User Name':user.displayName,'Email':user.email,'Enabled':user.enabled,'Role':user.role.roledesc}
             };
     	
         ModalService.showModal({}, modalOptions).then(function (result) {
